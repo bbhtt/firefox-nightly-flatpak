@@ -20,6 +20,8 @@ finish-args:
   - --socket=fallback-x11
   - --socket=pulseaudio
   - --share=network
+  # Smartcard access - Requires flatpak >= 1.3.2
+  - '--socket=pcsc'
   # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#140
   - --require-version=0.11.1
   - --talk-name=org.kde.StatusNotifierWatcher
@@ -33,6 +35,7 @@ finish-args:
   - --talk-name=org.gtk.vfs.*
   - --filesystem=xdg-download
   - --own-name=org.mpris.MediaPlayer2.firefox.*
+  - --own-name=org.mozilla.firefox.*
   # Persist the profiles
   - --persist=.mozilla
   - --filesystem=/etc/firefox/policies
@@ -52,7 +55,9 @@ modules:
       - sed -i -e 's/__DEFAULT_WAYLAND__/true/'
         -e "s,\$MOZ_LIB_DIR/,${FLATPAK_DEST}/,g"
         -e "s,/__PREFIX__/bin/firefox,/__PREFIX__/bin/firefox-nightly,g"
-        -e 's,/__PREFIX__,${FLATPAK_DEST},g' firefox.sh.in
+        -e 's,/__PREFIX__,${FLATPAK_DEST},g'
+        -e 's|%FLATPAK_ENV_VARS%|export TMPDIR="$XDG_CACHE_HOME/tmp"|'
+        firefox.sh.in
       - 'install -Dm 755 firefox.sh.in ${FLATPAK_DEST}/bin/firefox-nightly'
 
       # Desktop Entry
@@ -106,25 +111,22 @@ modules:
   - name: default-preferences
     buildsystem: simple
     build-commands:
-      # Copy over run-mozilla.sh
       - install -Dm644 default-preferences.js ${FLATPAK_DEST}/firefox/browser/defaults/preferences/default-preferences.js
     sources:
       - type: file
         url: https://hg.mozilla.org/mozilla-central/raw-file/ffe056c7c496395708f643aeb00910622d689f64/taskcluster/docker/firefox-flatpak/default-preferences.js
         sha256: 23faaa790d55eab99c7131008b47859c100297a74eb53530763e34c5f4eebed1
         dest-filename: default-preferences.js
-    
+
   - name: policies
     buildsystem: simple
     build-commands:
-      # Copy over run-mozilla.sh
       - install -Dm644 policies.json ${FLATPAK_DEST}/firefox/distribution/policies.json
     sources:
       - type: file
         url: https://hg.mozilla.org/mozilla-central/raw-file/ffe056c7c496395708f643aeb00910622d689f64/taskcluster/docker/firefox-flatpak/policies.json
         sha256: 35b68797094749f1d0553b3bc9f4154f323729c0d37345e472f249aab73be1bf
         dest-filename: policies.json
-    
 
   # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#52
   - name: distribution
