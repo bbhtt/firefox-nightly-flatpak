@@ -5,7 +5,9 @@ variables:
 
 update-sources:
   stage: build
-  image: ghcr.io/flathub/flatpak-external-data-checker
+  image:
+    name: ghcr.io/flathub/flatpak-external-data-checker
+    entrypoint: ['/bin/bash']
   script:
     - /app/flatpak-external-data-checker --update --edit-only $MANIFEST_PATH
   artifacts:
