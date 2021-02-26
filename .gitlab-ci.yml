@@ -1,0 +1,23 @@
+include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
+
+variables:
+  MANIFEST_PATH: $CI_PROJECT_DIR/org.mozilla.FirefoxNightly.yaml
+
+update-sources:
+  stage: build
+  image: ghcr.io/flathub/flatpak-external-data-checker
+  script:
+    - /app/flatpak-external-data-checker --update --edit-only $MANIFEST_PATH
+  artifacts:
+    paths:
+      - $MANIFEST_PATH
+
+flatpak:
+  dependencies:
+    - update-sources
+  variables:
+    RUNTIME_REPO: 'https://flathub.org/repo/flathub.flatpakrepo'
+    FLATPAK_MODULE: 'firefox-nightly'
+    APP_ID: 'org.mozilla.FirefoxNightly'
+    BUNDLE: $CI_PROJECT_DIR/public
+  extends: .flatpak
