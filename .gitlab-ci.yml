@@ -41,7 +41,7 @@ flatpak:
       org.freedesktop.Sdk//${RUNTIME_VRESION}
       org.mozilla.firefox.BaseApp//${RUNTIME_VRESION}
   script:
-    - flatpak-builder --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
+    - flatpak-builder build --user --disable-rofiles-fuse --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
 
     # Generate a Flatpak bundle
     - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
