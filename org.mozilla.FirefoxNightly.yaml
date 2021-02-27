@@ -47,10 +47,6 @@ modules:
   - name: metadata
     buildsystem: simple
     build-commands:
-      # symbolic-icon
-      - install -Dm644 firefox-symbolic.svg
-        "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
-
       # Install the wrapper script to start it.
       - sed -i -e 's/__DEFAULT_WAYLAND__/true/'
         -e "s,\$MOZ_LIB_DIR/,${FLATPAK_DEST}/,g"
@@ -128,6 +124,21 @@ modules:
         sha256: 35b68797094749f1d0553b3bc9f4154f323729c0d37345e472f249aab73be1bf
         dest-filename: policies.json
 
+  # https://mozilla.design/firefox/logos-usage/
+  - name: icons
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 "Fx-Browser-Nightly-icon-fullColor.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
+
+      # symbolic-icon
+      - install -Dm644 "Fx-Browser-Nightly-icon-oneColor.svg"
+        "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
+    sources:
+      - type: archive
+        url: https://3u26hb1g25wn1xwo8g186fnd-wpengine.netdna-ssl.com/files/2019/10/Firefox-Browser-Nightly-Logo-Assets.zip
+        sha256: 171804ae3ded7446b7719f656c2124a9e425896f692cecddb8b86708a0105b11
+        dest-filename: Firefox-Browser-Nightly-Logo-Assets.zip
+
   # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#52
   - name: distribution
     buildsystem: simple
@@ -147,11 +158,6 @@ modules:
       - find . -name '*.py' -type f -exec sed -i -e
         's,!/usr/bin/python,!/usr/bin/python3,' -e 's,/usr/bin/env
         python,/usr/bin/env python3,' -s {} \;
-
-      - for size in 16 32 48 64 128; do [[ -e
-        "browser/chrome/icons/default/default${size}.png" ]] && install
-        -Dm644 "browser/chrome/icons/default/default${size}.png"
-        "${FLATPAK_DEST}/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png"; done
 
       # Blobs provided by Mozilla
       - cp -rf . ${FLATPAK_DEST}/firefox
