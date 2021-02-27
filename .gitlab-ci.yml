@@ -8,7 +8,8 @@ update-sources:
   stage: build
   image:
     name: ghcr.io/flathub/flatpak-external-data-checker
-    entrypoint: ['/bin/bash']
+    # Open shell rather than the bin
+    entrypoint: [""] 
   script:
     - /app/flatpak-external-data-checker --update --edit-only $MANIFEST_PATH
   artifacts:
