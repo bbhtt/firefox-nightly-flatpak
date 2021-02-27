@@ -18,7 +18,7 @@ update-sources:
     # Open shell rather than the bin
     entrypoint: ['']
   script:
-    - /app/flatpak-external-data-checker --update --edit-only $MANIFEST_PATH
+    - /app/flatpak-external-data-checker --update --edit-only $MANIFEST_PATH || true
   artifacts:
     paths:
       - $MANIFEST_PATH
@@ -32,14 +32,16 @@ flatpak:
     FLATPAK_MODULE: 'firefox-nightly'
     APP_ID: 'org.mozilla.FirefoxNightly'
     RUNTIME_VRESION: '20.08'
-  script:
-    - flatpak-builder --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
-
+  before_script:
     # Add dependent sdk
+    - flatpak remote-add --user --if-not-exists flathub ${RUNTIME_REPO}
     - flatpak install --user --noninteractive
       org.freedesktop.Platform//${RUNTIME_VRESION}
       org.freedesktop.Platform.ffmpeg-full//${RUNTIME_VRESION}
       org.freedesktop.Sdk//${RUNTIME_VRESION}
+      org.mozilla.firefox.BaseApp//${RUNTIME_VRESION}
+  script:
+    - flatpak-builder --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
 
     # Generate a Flatpak bundle
     - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
