@@ -9,7 +9,7 @@ update-sources:
   image:
     name: ghcr.io/flathub/flatpak-external-data-checker
     # Open shell rather than the bin
-    entrypoint: [""] 
+    entrypoint: ['']
   script:
     - /app/flatpak-external-data-checker --update --edit-only $MANIFEST_PATH
   artifacts:
@@ -23,6 +23,7 @@ flatpak:
     RUNTIME_REPO: 'https://flathub.org/repo/flathub.flatpakrepo'
     FLATPAK_MODULE: 'firefox-nightly'
     APP_ID: 'org.mozilla.FirefoxNightly'
+  tags: ['']
   extends: .flatpak
 
 pages:
