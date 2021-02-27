@@ -45,23 +45,9 @@ flatpak:
 
     # Generate a Flatpak bundle
     - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
-    - tar cf repo.tar repo/
-
-    # Run automatic tests inside the Flatpak env
-    # we need to recreate the build directory because cleanup would have deleted build dependencies
-    - rm -rf flatpak_app
-    - flatpak-builder --user --disable-rofiles-fuse --build-only flatpak_app ${MANIFEST_PATH}
-    - flatpak build-finish --socket=x11 --share=network flatpak_app
-    - >
-      xvfb-run -a -s "-screen 0 1024x768x24"
-      flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH} <<END
-
-      LANG=C.UTF-8
-      NO_AT_BRIDGE=1
-      dbus-run-session
-      meson test --no-stdsplit --print-errorlogs ${TEST_RUN_ARGS}
-
-      END
+  artifacts:
+    paths:
+      - repo
   tags: ['']
   extends: .flatpak
 
@@ -69,7 +55,6 @@ pages:
   image: ${DOCKER_AMD64}
   stage: deploy
   script:
-    - tar xf repo.tar
     - flatpak build-update-repo --generate-static-deltas repo/
     - mv repo public
   artifacts:
