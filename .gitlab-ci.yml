@@ -2,6 +2,7 @@ include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_
 
 variables:
   MANIFEST_PATH: $CI_PROJECT_DIR/org.mozilla.FirefoxNightly.yaml
+  BUNDLE: 'org.mozilla.FirefoxNightly.flatpak'
 
 update-sources:
   stage: build
@@ -21,5 +22,15 @@ flatpak:
     RUNTIME_REPO: 'https://flathub.org/repo/flathub.flatpakrepo'
     FLATPAK_MODULE: 'firefox-nightly'
     APP_ID: 'org.mozilla.FirefoxNightly'
-    BUNDLE: $CI_PROJECT_DIR/public
   extends: .flatpak
+
+pages:
+  image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/flat-manager-client'
+  stage: deploy
+  script:
+    - tar xf repo.tar
+    - flatpak build-update-repo --generate-static-deltas repo/
+    - mv repo public
+  artifacts:
+    paths:
+      - public
