@@ -1,0 +1,60 @@
+include: 
+  - https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml
+  - https://gitlab.com/accessable-net/gitlab-ci-templates/raw/master/pages.yml
+
+variables:
+  MANIFEST_PATH: $CI_PROJECT_DIR/org.mozilla.FirefoxNightly.yaml
+  BUNDLE: 'org.mozilla.FirefoxNightly.flatpak'
+
+  DOCKER_REGISTRY: 'registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images'
+  DOCKER_IMAGE_ID: 'latest'
+  DOCKER_AMD64: '${DOCKER_REGISTRY}/bst16/amd64:${DOCKER_IMAGE_ID}'
+  DOCKER_AARCH64: '${DOCKER_REGISTRY}/bst16/arm64:${DOCKER_IMAGE_ID}'
+  DOCKER_PPC64LE: '${DOCKER_REGISTRY}/bst16/ppc64le:${DOCKER_IMAGE_ID}'
+  SCHEDULE_TASK: default
+
+update-sources:
+  stage: build
+  image:
+    name: ghcr.io/flathub/flatpak-external-data-checker
+    # Open shell rather than the bin
+    entrypoint: ['']
+  script:
+    - /app/flatpak-external-data-checker --update --edit-only $MANIFEST_PATH || true
+  artifacts:
+    paths:
+      - $MANIFEST_PATH
+
+flatpak:
+  dependencies:
+    - update-sources
+  image: ${DOCKER_AMD64}
+  variables:
+    RUNTIME_REPO: 'https://flathub.org/repo/flathub.flatpakrepo'
+    FLATPAK_MODULE: 'firefox-nightly'
+    APP_ID: 'org.mozilla.FirefoxNightly'
+    RUNTIME_VRESION: '20.08'
+  before_script:
+    # Add dependent sdk
+    - flatpak remote-add --user --if-not-exists flathub ${RUNTIME_REPO}
+    - flatpak install --user --noninteractive
+      org.freedesktop.Platform//${RUNTIME_VRESION}
+      org.freedesktop.Platform.ffmpeg-full//${RUNTIME_VRESION}
+      org.freedesktop.Sdk//${RUNTIME_VRESION}
+      org.mozilla.firefox.BaseApp//${RUNTIME_VRESION}
+  script:
+    - flatpak-builder build --user --disable-rofiles-fuse --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
+
+    # Generate a Flatpak bundle
+    - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
+
+    - flatpak build-update-repo --generate-static-deltas repo/
+  artifacts:
+    paths:
+      - repo
+  tags: ['']
+  extends: .flatpak
+
+pages:
+  variables:
+    BUILD_OUTPUT_PATH: ${CI_PROJECT_DIR}/repo

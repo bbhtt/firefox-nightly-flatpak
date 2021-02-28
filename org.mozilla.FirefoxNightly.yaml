@@ -21,7 +21,7 @@ finish-args:
   - --socket=pulseaudio
   - --share=network
   # Smartcard access - Requires flatpak >= 1.3.2
-  - '--socket=pcsc'
+  - --socket=pcsc
   # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#140
   - --require-version=0.11.1
   - --talk-name=org.kde.StatusNotifierWatcher
@@ -47,10 +47,6 @@ modules:
   - name: metadata
     buildsystem: simple
     build-commands:
-      # symbolic-icon
-      - install -Dm644 firefox-symbolic.svg
-        "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
-
       # Install the wrapper script to start it.
       - sed -i -e 's/__DEFAULT_WAYLAND__/true/'
         -e "s,\$MOZ_LIB_DIR/,${FLATPAK_DEST}/,g"
@@ -128,7 +124,26 @@ modules:
         sha256: 35b68797094749f1d0553b3bc9f4154f323729c0d37345e472f249aab73be1bf
         dest-filename: policies.json
 
-  # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#52
+  # # https://mozilla.design/firefox/logos-usage/
+  # # https://3u26hb1g25wn1xwo8g186fnd-wpengine.netdna-ssl.com/files/2019/10/Firefox-Browser-Nightly-Logo-Assets.zip
+  # - name: icons
+  #   buildsystem: simple
+  #   build-commands:
+  #     - install -Dm644 "org.mozilla.FirefoxNightly.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
+
+  #   # symbolic-icon
+  #     - install -Dm644 "org.mozilla.FirefoxNightly-symbolic.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
+  #   sources:
+  #     - type: file
+  #       url: https://hg.mozilla.org/mozilla-central/raw-file/tip/browser/branding/nightly/content/about-logo.svg
+  #       sha256: 1bc3bb02384b61941ceedd4afae930e25efe288a404604c4b2c2aed6962663bb
+  #       dest-filename: org.mozilla.FirefoxNightly.svg
+  #     - type: file
+  #       url: https://hg.mozilla.org/mozilla-central/raw-file/tip/browser/branding/official/content/identity-icons-brand.svg
+  #       sha256: a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9
+  #       dest-filename: org.mozilla.FirefoxNightly-symbolic.svg
+
+    # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#52
   - name: distribution
     buildsystem: simple
     build-commands:
@@ -159,10 +174,10 @@ modules:
       - rm -f ${FLATPAK_DEST}/firefox/update-settings.ini
     sources:
       - type: archive
-        url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-87.0a1.en-US.linux-x86_64.tar.bz2
-        sha512: 4379c334f409945d1d0b0de3e8573fffb579b98c90e930115be75734e24308fa6d412c002b8212ac39003593f8002d2f4d70dab11769fa9ce9b3766ca06bcb04
+        url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-88.0a1.en-US.linux-x86_64.tar.bz2
+        sha256: fe2ac8f6bb5a81ae0bb56f736d6799948c8a5689ca12647c3677ebbf5413bd9e
         x-checker-data:
           type: html
           url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/
-          version-pattern: "firefox-([a\\d\\.-]+).en-US.linux-x86_64.tar.bz2"
+          version-pattern: firefox-([a\d\.-]+).en-US.linux-x86_64.tar.bz2
           url-template: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
