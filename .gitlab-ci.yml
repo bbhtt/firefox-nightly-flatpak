@@ -1,4 +1,6 @@
-include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
+include: 
+  - https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml
+  - https://gitlab.com/accessable-net/gitlab-ci-templates/raw/master/pages.yml
 
 variables:
   MANIFEST_PATH: $CI_PROJECT_DIR/org.mozilla.FirefoxNightly.yaml
@@ -45,6 +47,8 @@ flatpak:
 
     # Generate a Flatpak bundle
     - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
+
+    - flatpak build-update-repo --generate-static-deltas repo/
   artifacts:
     paths:
       - repo
@@ -52,11 +56,5 @@ flatpak:
   extends: .flatpak
 
 pages:
-  image: ${DOCKER_AMD64}
-  stage: deploy
-  script:
-    - flatpak build-update-repo --generate-static-deltas repo/
-    - mv repo public
-  artifacts:
-    paths:
-      - public
+  variables:
+    BUILD_OUTPUT_PATH: ${CI_PROJECT_DIR}/repo
