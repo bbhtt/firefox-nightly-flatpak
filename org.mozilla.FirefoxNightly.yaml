@@ -77,7 +77,7 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        VERSION: '87.0'
+        VERSION: '88.0'
     build-commands:
       - sed -i
         -e "s/\$VERSION/${VERSION}/"
