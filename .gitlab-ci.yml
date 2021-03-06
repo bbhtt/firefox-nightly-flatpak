@@ -36,11 +36,10 @@ flatpak:
     RUNTIME_VRESION: '20.08'
   before_script:
     # GPG noninteractive passphase
-    - GPG_PASSPHRASE=`echo $GPG_PASSPHRASE | base64 --decode`
     - gpg --list-keys --with-keygrip # init gpg
     - echo "allow-preset-passphrase" >> ~/.gnupg/gpg-agent.conf
     - gpg-connect-agent reloadagent /bye
-    - /usr/libexec/gpg-preset-passphrase -P $GPG_PASSPHRASE --preset $GPG_KEY_GREP
+    - cat $GPG_PASSPHRASE | /usr/libexec/gpg-preset-passphrase --preset $GPG_KEY_GREP
     - gpg --import --batch ${GPG_PRIVATE_KEY}
 
     # Add dependent sdk
