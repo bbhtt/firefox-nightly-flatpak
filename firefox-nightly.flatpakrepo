@@ -1,7 +1,0 @@
-[Flatpak Repo]
-Title=Firefox Nightly Repo
-Url=http://proletarius101.gitlab.io/firefox-nightly-flatpak
-Homepage=https://gitlab.com/proletarius101/firefox-nightly-flatpak/
-Comment=Repository of Firefox Nightly Flatpak applications
-Description=Repository of Firefox Nightly Flatpak applications
-Icon=https://hg.mozilla.org/mozilla-central/raw-file/tip/browser/branding/nightly/content/about-logo.svg

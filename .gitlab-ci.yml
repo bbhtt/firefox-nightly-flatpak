@@ -13,9 +13,6 @@ variables:
   DOCKER_PPC64LE: '${DOCKER_REGISTRY}/bst16/ppc64le:${DOCKER_IMAGE_ID}'
   SCHEDULE_TASK: default
 
-  GPG_KEY_ID: DBE2F4AC5184BAA1
-  GPG_KEY_GREP: B65796C82E9F573DD1A1F0E8521F90FB6F8937EB # gpg --list-keys --with-keygrip
-
 update-sources:
   stage: build
   image:
@@ -38,6 +35,14 @@ flatpak:
     APP_ID: 'org.mozilla.FirefoxNightly'
     RUNTIME_VRESION: '20.08'
   before_script:
+    # GPG noninteractive passphase
+    - GPG_PASSPHRASE=`echo $GPG_PASSPHRASE | base64 --decode`
+    - gpg --list-keys --with-keygrip # init gpg
+    - echo "allow-preset-passphrase" >> ~/.gnupg/gpg-agent.conf
+    - gpg-connect-agent reloadagent /bye
+    - /usr/libexec/gpg-preset-passphrase -P $GPG_PASSPHRASE --preset $GPG_KEY_GREP
+    - gpg --import --batch ${GPG_PRIVATE_KEY}
+
     # Add dependent sdk
     - flatpak remote-add --user --if-not-exists flathub ${RUNTIME_REPO}
     - flatpak install --user --noninteractive
@@ -46,10 +51,12 @@ flatpak:
       org.freedesktop.Sdk//${RUNTIME_VRESION}
       org.mozilla.firefox.BaseApp//${RUNTIME_VRESION}
   script:
-    - flatpak-builder build --user --disable-rofiles-fuse --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
+    - flatpak-builder build --gpg-sign=${GPG_KEY_ID} --disable-rofiles-fuse --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
 
     # Generate a Flatpak bundle
-    - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
+    - flatpak build-bundle --gpg-sign=${GPG_KEY_ID} repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
+
+    - flatpak build-update-repo --gpg-sign=${GPG_KEY_ID} --generate-static-deltas repo/
   artifacts:
     paths:
       - repo
@@ -57,15 +64,5 @@ flatpak:
   extends: .flatpak
 
 pages:
-  image: ${DOCKER_AMD64}
-  script:
-    # GPG noninteractive passphase
-    - GPG_PASSPHRASE=`echo $GPG_PASSPHRASE | base64 --decode`
-    - gpg --list-keys --with-keygrip # init gpg
-    - echo "allow-preset-passphrase" >> ~/.gnupg/gpg-agent.conf
-    - gpg-connect-agent reloadagent /bye
-    - /usr/libexec/gpg-preset-passphrase -P $GPG_PASSPHRASE --preset $GPG_KEY_GREP
-    - gpg --import --batch ${GPG_PRIVATE_KEY}
-    - flatpak build-update-repo --generate-static-deltas repo/
-    - flatpak build-sign --gpg-sign=${GPG_KEY_ID} repo/
-    - mv repo public
+  variables:
+    BUILD_OUTPUT_PATH: ${CI_PROJECT_DIR}/repo
