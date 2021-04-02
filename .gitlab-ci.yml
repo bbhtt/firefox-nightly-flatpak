@@ -4,13 +4,13 @@ include:
 
 variables:
   MANIFEST_PATH: $CI_PROJECT_DIR/org.mozilla.FirefoxNightly.yaml
-  BUNDLE: 'org.mozilla.FirefoxNightly.flatpak'
+  BUNDLE: "org.mozilla.FirefoxNightly.flatpak"
 
-  DOCKER_REGISTRY: 'registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images'
-  DOCKER_IMAGE_ID: 'latest'
-  DOCKER_AMD64: '${DOCKER_REGISTRY}/bst16/amd64:${DOCKER_IMAGE_ID}'
-  DOCKER_AARCH64: '${DOCKER_REGISTRY}/bst16/arm64:${DOCKER_IMAGE_ID}'
-  DOCKER_PPC64LE: '${DOCKER_REGISTRY}/bst16/ppc64le:${DOCKER_IMAGE_ID}'
+  DOCKER_REGISTRY: "registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images"
+  DOCKER_IMAGE_ID: "latest"
+  DOCKER_AMD64: "${DOCKER_REGISTRY}/bst16/amd64:${DOCKER_IMAGE_ID}"
+  DOCKER_AARCH64: "${DOCKER_REGISTRY}/bst16/arm64:${DOCKER_IMAGE_ID}"
+  DOCKER_PPC64LE: "${DOCKER_REGISTRY}/bst16/ppc64le:${DOCKER_IMAGE_ID}"
   SCHEDULE_TASK: default
 
 update-sources:
@@ -18,22 +18,32 @@ update-sources:
   image:
     name: ghcr.io/flathub/flatpak-external-data-checker
     # Open shell rather than the bin
-    entrypoint: ['']
+    entrypoint: [""]
+  before_script:
+    - git config --global user.name "${GITLAB_USER_LOGIN}"
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
   script:
-    - /app/flatpak-external-data-checker --update --edit-only $MANIFEST_PATH || true
+    - /app/flatpak-external-data-checker --update --commit-only $MANIFEST_PATH
+
+    - git push -o merge_request.create -o merge_request.target=master -o merge_request.merge_when_pipeline_succeeds
+      "https://${GITLAB_USER_NAME}:${CI_GIT_TOKEN}@${CI_REPOSITORY_URL#*@}"
   artifacts:
     paths:
       - $MANIFEST_PATH
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
+    - when: never
 
 flatpak:
   dependencies:
     - update-sources
   image: ${DOCKER_AMD64}
   variables:
-    RUNTIME_REPO: 'https://flathub.org/repo/flathub.flatpakrepo'
-    FLATPAK_MODULE: 'firefox-nightly'
-    APP_ID: 'org.mozilla.FirefoxNightly'
-    RUNTIME_VRESION: '20.08'
+    RUNTIME_REPO: "https://flathub.org/repo/flathub.flatpakrepo"
+    FLATPAK_MODULE: "firefox-nightly"
+    APP_ID: "org.mozilla.FirefoxNightly"
+    RUNTIME_VRESION: "20.08"
   before_script:
     # GPG noninteractive passphase
     - gpg --list-keys --with-keygrip # init gpg
@@ -59,9 +69,17 @@ flatpak:
   artifacts:
     paths:
       - repo
-  tags: ['']
+  tags: [""]
   extends: .flatpak
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: always
 
 pages:
   variables:
     BUILD_OUTPUT_PATH: ${CI_PROJECT_DIR}/repo
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: always
