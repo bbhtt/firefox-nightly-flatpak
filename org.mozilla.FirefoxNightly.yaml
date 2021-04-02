@@ -48,25 +48,20 @@ modules:
     buildsystem: simple
     build-commands:
       # Install the wrapper script to start it.
-      - sed -i -e 's/__DEFAULT_WAYLAND__/true/'
-        -e "s,\$MOZ_LIB_DIR/,${FLATPAK_DEST}/,g"
-        -e "s,/__PREFIX__/bin/firefox,/__PREFIX__/bin/firefox-nightly,g"
-        -e 's,/__PREFIX__,${FLATPAK_DEST},g'
-        -e 's|%FLATPAK_ENV_VARS%|export TMPDIR="$XDG_CACHE_HOME/tmp"|'
-        firefox.sh.in
-      - 'install -Dm 755 firefox.sh.in ${FLATPAK_DEST}/bin/firefox-nightly'
+      - sed -i -e 's/__DEFAULT_WAYLAND__/true/' -e "s,\$MOZ_LIB_DIR/,${FLATPAK_DEST}/,g"
+        -e "s,/__PREFIX__/bin/firefox,/__PREFIX__/bin/firefox-nightly,g" -e 's,/__PREFIX__,${FLATPAK_DEST},g'
+        -e 's|%FLATPAK_ENV_VARS%|export TMPDIR="$XDG_CACHE_HOME/tmp"|' firefox.sh.in
+      - install -Dm 755 firefox.sh.in ${FLATPAK_DEST}/bin/firefox-nightly
 
       # Desktop Entry
-      - sed -i -e "s,Exec=firefox ,Exec=firefox-nightly --name ${FLATPAK_ID} ,g"
-        -e "s,Icon=firefox,Icon=${FLATPAK_ID},g"
-        -e "s,Name=Firefox,Name=Firefox Nightly,g" firefox.desktop
-      - install -Dm644 firefox.desktop
-        ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - sed -i -e "s,Exec=firefox ,Exec=firefox-nightly --name ${FLATPAK_ID} ,g" -e
+        "s,Icon=firefox,Icon=${FLATPAK_ID},g" -e "s,Name=Firefox,Name=Firefox Nightly,g"
+        firefox.desktop
+      - install -Dm644 firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
 
       # Search Provider
       - sed -i -e 's/firefox.desktop/${FLATPAK_ID}.desktop/' firefox-search-provider.ini
-      - install -Dm644 firefox-search-provider.ini
-        ${FLATPAK_DEST}/share/gnome-shell/search-providers/${FLATPAK_ID}-search-provider.ini
+      - install -Dm644 firefox-search-provider.ini ${FLATPAK_DEST}/share/gnome-shell/search-providers/${FLATPAK_ID}-search-provider.ini
     sources:
       - type: git
         url: https://src.fedoraproject.org/rpms/firefox.git
@@ -79,12 +74,8 @@ modules:
       env:
         VERSION: '88.0'
     build-commands:
-      - sed -i
-        -e "s/\$VERSION/${VERSION}/"
-        -e "s/\$DATE/$(date '+%F')/"
-        -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
-        -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g"
-        org.mozilla.firefox.appdata.xml.in
+      - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
+        -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
       - install -Dm644 org.mozilla.firefox.appdata.xml.in ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
     sources:
       - type: file
@@ -159,14 +150,12 @@ modules:
     build-commands:
       ## Firefox explicitly supports python3, so its also our choice of interpreter. Note that there is no dependency on python.
       ## These scripts are only used when generating debug information in case of a crash, so not critical to the operation of firefox.
-      - find . -name '*.py' -type f -exec sed -i -e
-        's,!/usr/bin/python,!/usr/bin/python3,' -e 's,/usr/bin/env
-        python,/usr/bin/env python3,' -s {} \;
+      - find . -name '*.py' -type f -exec sed -i -e 's,!/usr/bin/python,!/usr/bin/python3,'
+        -e 's,/usr/bin/env python,/usr/bin/env python3,' -s {} \;
 
-      - for size in 16 32 48 64 128; do [[ -e
-        "browser/chrome/icons/default/default${size}.png" ]] && install
-        -Dm644 "browser/chrome/icons/default/default${size}.png"
-        "${FLATPAK_DEST}/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png"; done
+      - for size in 16 32 48 64 128; do [[ -e "browser/chrome/icons/default/default${size}.png"
+        ]] && install -Dm644 "browser/chrome/icons/default/default${size}.png" "${FLATPAK_DEST}/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
+        done
 
       # Blobs provided by Mozilla
       - cp -rf . ${FLATPAK_DEST}/firefox
@@ -174,8 +163,8 @@ modules:
       - rm -f ${FLATPAK_DEST}/firefox/update-settings.ini
     sources:
       - type: archive
-        url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-88.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: fe2ac8f6bb5a81ae0bb56f736d6799948c8a5689ca12647c3677ebbf5413bd9e
+        url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-89.0a1.en-US.linux-x86_64.tar.bz2
+        sha256: 179fb6f4eb875b262e2391c414cb264af09c73c86ed03a08e7aa7e46273ad5d3
         x-checker-data:
           type: html
           url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/
