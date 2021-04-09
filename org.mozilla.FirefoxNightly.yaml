@@ -1,15 +1,15 @@
 app-id: org.mozilla.FirefoxNightly
 runtime: org.freedesktop.Platform
-runtime-version: '20.08'
+runtime-version: "20.08"
 sdk: org.freedesktop.Sdk
 base: org.mozilla.firefox.BaseApp
-base-version: '20.08'
+base-version: "20.08"
 command: firefox-nightly
 add-build-extensions:
   org.freedesktop.Platform.ffmpeg-full:
     directory: lib/ffmpeg
     add-ld-path: .
-    version: '20.08'
+    version: "20.08"
     autodownload: true
     autodelete: false
 
@@ -60,7 +60,7 @@ modules:
       - install -Dm644 firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
 
       # Search Provider
-      - sed -i -e 's/firefox.desktop/${FLATPAK_ID}.desktop/' firefox-search-provider.ini
+      - sed -i -e "s/firefox.desktop/${FLATPAK_ID}.desktop/" firefox-search-provider.ini
       - install -Dm644 firefox-search-provider.ini ${FLATPAK_DEST}/share/gnome-shell/search-providers/${FLATPAK_ID}-search-provider.ini
     sources:
       - type: git
@@ -72,7 +72,7 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        VERSION: '88.0'
+        VERSION: "88.0"
     build-commands:
       - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
         -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
@@ -134,7 +134,7 @@ modules:
   #       sha256: a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9
   #       dest-filename: org.mozilla.FirefoxNightly-symbolic.svg
 
-    # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#52
+  # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#52
   - name: distribution
     buildsystem: simple
     build-commands:
