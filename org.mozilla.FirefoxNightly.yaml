@@ -1,15 +1,15 @@
 app-id: org.mozilla.FirefoxNightly
 runtime: org.freedesktop.Platform
-runtime-version: "20.08"
+runtime-version: '20.08'
 sdk: org.freedesktop.Sdk
 base: org.mozilla.firefox.BaseApp
-base-version: "20.08"
+base-version: '20.08'
 command: firefox-nightly
 add-build-extensions:
   org.freedesktop.Platform.ffmpeg-full:
     directory: lib/ffmpeg
     add-ld-path: .
-    version: "20.08"
+    version: '20.08'
     autodownload: true
     autodelete: false
 
@@ -72,7 +72,7 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        VERSION: "88.0"
+        VERSION: '88.0'
     build-commands:
       - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
         -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
@@ -164,7 +164,7 @@ modules:
     sources:
       - type: archive
         url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-89.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: f1dc1a5ced4eb992b144e0b086ca5da87fa3fe9c4bae093a7332c63e32e1d524
+        sha256: 4019eca98398fc2eb0290b3a6d3bb09b77f8421149382d0387a83ea15b0afc2e
         x-checker-data:
           type: html
           url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/
