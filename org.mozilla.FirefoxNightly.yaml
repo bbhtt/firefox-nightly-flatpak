@@ -115,24 +115,24 @@ modules:
         sha256: 35b68797094749f1d0553b3bc9f4154f323729c0d37345e472f249aab73be1bf
         dest-filename: policies.json
 
-  # # https://mozilla.design/firefox/logos-usage/
-  # # https://3u26hb1g25wn1xwo8g186fnd-wpengine.netdna-ssl.com/files/2019/10/Firefox-Browser-Nightly-Logo-Assets.zip
-  # - name: icons
-  #   buildsystem: simple
-  #   build-commands:
-  #     - install -Dm644 "org.mozilla.FirefoxNightly.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
+  # https://mozilla.design/firefox/logos-usage/
+  # https://3u26hb1g25wn1xwo8g186fnd-wpengine.netdna-ssl.com/files/2019/10/Firefox-Browser-Nightly-Logo-Assets.zip
+  - name: icons
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 "org.mozilla.FirefoxNightly.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
 
-  #   # symbolic-icon
-  #     - install -Dm644 "org.mozilla.FirefoxNightly-symbolic.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
-  #   sources:
-  #     - type: file
-  #       url: https://hg.mozilla.org/mozilla-central/raw-file/tip/browser/branding/nightly/content/about-logo.svg
-  #       sha256: 1bc3bb02384b61941ceedd4afae930e25efe288a404604c4b2c2aed6962663bb
-  #       dest-filename: org.mozilla.FirefoxNightly.svg
-  #     - type: file
-  #       url: https://hg.mozilla.org/mozilla-central/raw-file/tip/browser/branding/official/content/identity-icons-brand.svg
-  #       sha256: a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9
-  #       dest-filename: org.mozilla.FirefoxNightly-symbolic.svg
+    # symbolic-icon
+      - install -Dm644 "org.mozilla.FirefoxNightly-symbolic.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
+    sources:
+      - type: file
+        url: https://hg.mozilla.org/mozilla-central/raw-file/tip/browser/branding/nightly/content/about-logo.svg
+        sha256: 1bc3bb02384b61941ceedd4afae930e25efe288a404604c4b2c2aed6962663bb
+        dest-filename: org.mozilla.FirefoxNightly.svg
+      - type: file
+        url: https://hg.mozilla.org/mozilla-central/raw-file/tip/browser/branding/official/content/identity-icons-brand.svg
+        sha256: a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9
+        dest-filename: org.mozilla.FirefoxNightly-symbolic.svg
 
   # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#52
   - name: distribution
@@ -153,9 +153,9 @@ modules:
       - find . -name '*.py' -type f -exec sed -i -e 's,!/usr/bin/python,!/usr/bin/python3,'
         -e 's,/usr/bin/env python,/usr/bin/env python3,' -s {} \;
 
-      - for size in 16 32 48 64 128; do [[ -e "browser/chrome/icons/default/default${size}.png"
-        ]] && install -Dm644 "browser/chrome/icons/default/default${size}.png" "${FLATPAK_DEST}/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
-        done
+      # - for size in 16 32 48 64 128; do [[ -e "browser/chrome/icons/default/default${size}.png"
+      #   ]] && install -Dm644 "browser/chrome/icons/default/default${size}.png" "${FLATPAK_DEST}/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
+      #   done
 
       # Blobs provided by Mozilla
       - cp -rf . ${FLATPAK_DEST}/firefox
