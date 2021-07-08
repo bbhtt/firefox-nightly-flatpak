@@ -119,19 +119,14 @@ modules:
   - name: icons
     buildsystem: simple
     build-commands:
-      - install -Dm644 "org.mozilla.FirefoxNightly.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
+      - install -Dm644 "Fx-Browser-Nightly-icon-fullColor.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
 
     # symbolic-icon
-      - install -Dm644 "org.mozilla.FirefoxNightly-symbolic.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
+      - install -Dm644 "Fx-Browser-Nightly-icon-oneColor-white.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
     sources:
-      - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/tip/browser/branding/nightly/content/about-logo.svg
-        sha256: 1bc3bb02384b61941ceedd4afae930e25efe288a404604c4b2c2aed6962663bb
-        dest-filename: org.mozilla.FirefoxNightly.svg
-      - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/tip/browser/branding/official/content/identity-icons-brand.svg
-        sha256: a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9
-        dest-filename: org.mozilla.FirefoxNightly-symbolic.svg
+      - type: archive
+        url: https://3u26hb1g25wn1xwo8g186fnd-wpengine.netdna-ssl.com/files/2019/10/Firefox-Browser-Nightly-Logo-Assets.zip
+        sha256: 171804ae3ded7446b7719f656c2124a9e425896f692cecddb8b86708a0105b11
 
   # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#52
   - name: distribution
