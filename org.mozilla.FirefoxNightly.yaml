@@ -102,9 +102,7 @@ modules:
       - install -Dm644 default-preferences.js ${FLATPAK_DEST}/firefox/browser/defaults/preferences/default-preferences.js
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/ffe056c7c496395708f643aeb00910622d689f64/taskcluster/docker/firefox-flatpak/default-preferences.js
-        sha256: 23faaa790d55eab99c7131008b47859c100297a74eb53530763e34c5f4eebed1
-        dest-filename: default-preferences.js
+        path: default-preferences.js
 
   - name: policies
     buildsystem: simple
