@@ -67,6 +67,8 @@ modules:
       - type: git
         url: https://src.fedoraproject.org/rpms/firefox.git
         branch: main
+      - type: patch
+        path: lockfile-launch-script.patch
 
   # Use the mozilla-provided metadata which has better presentation
   - name: metainfo
@@ -91,7 +93,7 @@ modules:
       - install -Dm755 run-mozilla.sh ${FLATPAK_DEST}/firefox/run-mozilla.sh
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/ffe056c7c496395708f643aeb00910622d689f64/build/unix/run-mozilla.sh
+        url: https://hg.mozilla.org/mozilla-central/raw-file/e5591aaa2cdc8ace99686b1e09bcd5d4c7c39fa6/build/unix/run-mozilla.sh
         sha256: e7fadbe1e407362d492263b5dcb66b131605643611e200bf526b4a52ae2a636b
         dest-filename: run-mozilla.sh
 
