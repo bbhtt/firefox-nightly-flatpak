@@ -164,3 +164,15 @@ modules:
           url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/
           version-pattern: firefox-([a\d\.-]+).en-US.linux-x86_64.tar.bz2
           url-template: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
+
+  - name: languagepacks
+    buildsystem: simple
+    build-commands:
+      # https://github.com/flathub/org.mozilla.Thunderbird/blob/master/org.mozilla.Thunderbird.json#L181
+      - mkdir -p /app/firefox/distribution/extensions
+      - for lang in langpacks/*.xpi;do export locale=$(basename -s .xpi $lang);
+        install -Dm644 -t /app/share/runtime/locale/${locale:9:2}/ $lang;
+        ln -sf /app/share/runtime/locale/${locale:9:2}/$(basename $lang) /app/firefox/distribution/extensions/$(basename $lang);
+        done
+    sources:
+      - generated-sources.json
