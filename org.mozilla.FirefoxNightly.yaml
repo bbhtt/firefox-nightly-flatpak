@@ -158,7 +158,7 @@ modules:
     sources:
       - type: archive
         url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-92.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: 330b513f6973b632371068b9d14013bc5059aa3167f2af7a4d3d564ca534b880
+        sha256: 77db448671775c56d0dd06511bf6bce4310e33ddde7adcc4e79c697789877d9c
         x-checker-data:
           type: html
           url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/
@@ -170,9 +170,8 @@ modules:
     build-commands:
       # https://github.com/flathub/org.mozilla.Thunderbird/blob/master/org.mozilla.Thunderbird.json#L181
       - mkdir -p /app/firefox/distribution/extensions
-      - for lang in langpacks/*.xpi;do export locale=$(basename -s .xpi $lang);
-        install -Dm644 -t /app/share/runtime/locale/${locale:9:2}/ $lang;
-        ln -sf /app/share/runtime/locale/${locale:9:2}/$(basename $lang) /app/firefox/distribution/extensions/$(basename $lang);
-        done
+      - for lang in langpacks/*.xpi;do export locale=$(basename -s .xpi $lang); install
+        -Dm644 -t /app/share/runtime/locale/${locale:9:2}/ $lang; ln -sf /app/share/runtime/locale/${locale:9:2}/$(basename
+        $lang) /app/firefox/distribution/extensions/$(basename $lang); done
     sources:
       - generated-sources.json
