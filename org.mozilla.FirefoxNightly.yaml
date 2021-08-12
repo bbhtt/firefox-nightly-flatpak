@@ -157,8 +157,8 @@ modules:
       - rm -f ${FLATPAK_DEST}/firefox/update-settings.ini
     sources:
       - type: archive
-        url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-92.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: 7147e5158656dc18377d40f200cf7e80bb6e05b3d9bfbb62e6135ec93de25bce
+        url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-93.0a1.en-US.linux-x86_64.tar.bz2
+        sha256: 104aa6ab1e7a5ece9cef62663bd052ffb928b9d49d9ec4e639b44951107abe35
         x-checker-data:
           type: html
           url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/
