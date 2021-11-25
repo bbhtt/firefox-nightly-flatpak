@@ -6,3 +6,4 @@ variables:
   APP_ID: org.mozilla.FirefoxNightly
   FLATPAK_MODULE: firefox-nightly
   PRODUCT_TYPE: firefox-nightly
+  RUNTIME_VRESION: "21.08"
