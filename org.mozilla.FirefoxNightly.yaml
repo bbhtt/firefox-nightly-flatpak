@@ -158,7 +158,7 @@ modules:
     sources:
       - type: archive
         url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-97.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: 6d015d39748cbe17445d01b3fe581d010f063762d2a743df340b0fa9fc2730a0
+        sha256: 1100413f5b3a7140a6c66e1024577146b55229de7b2b537a87b8a63d9234f49b
         x-checker-data:
           type: html
           url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/
