@@ -157,13 +157,13 @@ modules:
       - rm -f ${FLATPAK_DEST}/firefox/update-settings.ini
     sources:
       - type: archive
-        url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-98.0a1.en-US.linux-x86_64.tar.bz2
+        url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-98.0a1.en-US.linux-x86_64.tar.bz2
         sha256: f520518304bc321cf23d169242057e7df8fc6965956a52d5f1d2eb461666912a
         x-checker-data:
           type: html
-          url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/
+          url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
           version-pattern: firefox-([a\d\.-]+).en-US.linux-x86_64.tar.bz2
-          url-template: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
+          url-template: https://download-installer.cdn.mozilla.net/pub/thunderbird/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
 
   - name: languagepacks
     buildsystem: simple
