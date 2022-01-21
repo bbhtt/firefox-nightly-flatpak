@@ -163,7 +163,7 @@ modules:
           type: html
           url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
           version-pattern: firefox-([a\d\.-]+).en-US.linux-x86_64.tar.bz2
-          url-template: https://download-installer.cdn.mozilla.net/pub/thunderbird/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
+          url-template: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
 
   - name: languagepacks
     buildsystem: simple
