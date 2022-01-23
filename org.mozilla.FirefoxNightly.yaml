@@ -1,15 +1,21 @@
 app-id: org.mozilla.FirefoxNightly
 runtime: org.freedesktop.Platform
-runtime-version: '21.08'
+runtime-version: "21.08"
 sdk: org.freedesktop.Sdk
 base: org.mozilla.firefox.BaseApp
-base-version: '21.08'
+base-version: "21.08"
 command: firefox-nightly
 add-extensions:
   org.freedesktop.Platform.ffmpeg-full:
     directory: lib/ffmpeg
     add-ld-path: .
-    version: '21.08'
+    no-autodownload: true
+    version: "21.08"
+  # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#92-95
+  org.mozilla.FirefoxNightly.Locale:
+    directory: share/runtime/langpack
+    autodelete: true
+    locale-subset: true
 
 finish-args:
   - --device=dri
@@ -73,7 +79,7 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        VERSION: '88.0'
+        VERSION: "88.0"
     build-commands:
       - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
         -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
@@ -121,7 +127,7 @@ modules:
     build-commands:
       - install -Dm644 "Fx-Browser-Nightly-icon-fullColor.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
 
-    # symbolic-icon
+      # symbolic-icon
       - install -Dm644 "Fx-Browser-Nightly-icon-oneColor-white.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
     sources:
       - type: archive
