@@ -158,7 +158,7 @@ modules:
     sources:
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-98.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: bccaa7ff8f0549447276f3a72b58f35961be22b708fc32ffe419602572d3bc04
+        sha256: d308b812a5056ba1d6330cbad2039db9b06d92c97135a2812d85ffe8e585c5bd
         x-checker-data:
           type: html
           url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
