@@ -1,16 +1,16 @@
 app-id: org.mozilla.FirefoxNightly
 runtime: org.freedesktop.Platform
-runtime-version: "21.08"
+runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
 base: org.mozilla.firefox.BaseApp
-base-version: "21.08"
+base-version: '21.08'
 command: firefox-nightly
 add-extensions:
   org.freedesktop.Platform.ffmpeg-full:
     directory: lib/ffmpeg
     add-ld-path: .
     no-autodownload: true
-    version: "21.08"
+    version: '21.08'
   # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#92-95
   org.mozilla.FirefoxNightly.Locale:
     directory: share/runtime/langpack
@@ -79,7 +79,7 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        VERSION: "88.0"
+        VERSION: '88.0'
     build-commands:
       - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
         -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
@@ -164,7 +164,7 @@ modules:
     sources:
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-98.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: d308b812a5056ba1d6330cbad2039db9b06d92c97135a2812d85ffe8e585c5bd
+        sha256: 4d4adc4890b88d1bb9c0560d8ba1f3870fec14449e65d46ee3431d44d2865e19
         x-checker-data:
           type: html
           url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
