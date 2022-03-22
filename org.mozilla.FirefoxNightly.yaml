@@ -164,7 +164,7 @@ modules:
     sources:
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-100.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: 7e6a5a28bcf2fd8c650de1baff967024fd143136b0d17135352ad4030c9d0d29
+        sha256: 60f5d775e39138c59ae968ae75d1ad9a0882798937d7b55bd68edd7bb7f4a00c
         x-checker-data:
           type: html
           url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
