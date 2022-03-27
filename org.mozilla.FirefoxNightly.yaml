@@ -56,9 +56,9 @@ modules:
     buildsystem: simple
     build-commands:
       # Install the wrapper script to start it.
-      - sed -i -e 's/__DEFAULT_WAYLAND__/true/'
-        -e "s,/__PREFIX__/bin/firefox,/__PREFIX__/bin/firefox-nightly,g" -e "s,/__PREFIX__,${FLATPAK_DEST},g"
-        -e "s|%FLATPAK_ENV_VARS%|export TMPDIR=\"\$XDG_CACHE_HOME/tmp\"|" firefox.sh.in
+      - sed -i -e 's/__DEFAULT_WAYLAND__/true/' -e "s,/__PREFIX__/bin/firefox,/__PREFIX__/bin/firefox-nightly,g"
+        -e "s,/__PREFIX__,${FLATPAK_DEST},g" -e "s|%FLATPAK_ENV_VARS%|export TMPDIR=\"\$XDG_CACHE_HOME/tmp\"|"
+        firefox.sh.in
       - install -Dm 755 firefox.sh.in ${FLATPAK_DEST}/bin/firefox-nightly
 
       # Desktop Entry
@@ -165,7 +165,7 @@ modules:
     sources:
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-100.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: 69dd899064196630545f61597979d1f0383f2fe589835a756e3c989837accff2
+        sha256: ef965237fcc73b49e0709ccf75c9d4fc4327ccaedf4d7381fdee06a2a194746a
         x-checker-data:
           type: html
           url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
