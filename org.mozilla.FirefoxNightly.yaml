@@ -37,9 +37,8 @@ finish-args:
   - --persist=.mozilla
 
   - --env=GTK_PATH=/app/lib/gtkmodules
+  - --env=XCURSOR_PATH=/run/host/share/icons:/run/host/user-share/icons
 
-  - --talk-name=org.kde.*
-  - --talk-name=org.freedesktop.secrets
   - --talk-name=org.freedesktop.FileManager1
   - --talk-name=org.a11y.Bus
   - --talk-name=org.gnome.SessionManager
