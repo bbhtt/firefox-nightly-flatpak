@@ -1,5 +1,6 @@
 include:
   - https://gitlab.com/bbhtt/gitlab-ci-templates/-/raw/master/flatpak.yml
+  - https://gitlab.com/bbhtt/gitlab-ci-templates/-/raw/master/flatpak-checksum-updater.yml
   - https://gitlab.com/accessable-net/gitlab-ci-templates/raw/master/mozilla-langpacks-update.yml
 
 variables:
