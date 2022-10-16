@@ -2,18 +2,18 @@
 
 ## Install
 
-1. Install [flatpak]([https://flatpak.org/setup/) (>=0.11.1), [xdg-desktop-portal](https://github.com/flatpak/xdg-desktop-portal) and its [backends](https://github.com/flatpak/xdg-desktop-portal#using-portals). Latest versions are preferred.
+1. Install [flatpak](https://flatpak.org/setup/) (>=0.11.1), [xdg-desktop-portal](https://github.com/flatpak/xdg-desktop-portal) and its [backends](https://github.com/flatpak/xdg-desktop-portal#using-portals). Latest versions are preferred.
 
-2. Add the Flathub repository
+2. Add the Flathub repository if absent
 
 ```bash
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 ```
 
-3. Install `ffmpeg-full` (necessary for codec support)
+3. Install `ffmpeg-full` (necessary for full codec support)
 
 ```bash
-flatpak install org.freedesktop.Platform.ffmpeg-full//22.08
+flatpak install --user flathub org.freedesktop.Platform.ffmpeg-full//22.08
 ```
 
 4. Install this package
@@ -22,7 +22,7 @@ flatpak install org.freedesktop.Platform.ffmpeg-full//22.08
 flatpak install --user https://gitlab.com/bbhtt/firefox-nightly-flatpak/-/raw/main/firefox-nightly.flatpakref
 ```
 
-This sets up a new [flatpak remote](https://man7.org/linux/man-pages/man5/flatpak-remote.5.html) called `firefoxnightly-origin`
+This sets up a new [flatpak remote](https://man7.org/linux/man-pages/man5/flatpak-remote.5.html) called `firefoxnightly-origin` userwide.
 
 ## Update
 
@@ -35,7 +35,11 @@ flatpak update
 ## Uninstall
 
 ```bash
+# Clears profile
 flatpak remove --delete-data org.mozilla.FirefoxNightly
+# Clear dependencies
+flatpak uninstall --unused
+# Delete the remote
 flatpak remote-delete firefoxnightly-origin
 ```
 
@@ -45,9 +49,7 @@ This package tries to stay close to Mozilla's official packaging and no modifica
 
 The profile location is `~/.var/app/org.mozilla.FirefoxNightly/.mozilla/firefox`
 
-The flatpak is built from the official Nightly tarball published by Mozilla. The search provider, desktop file and run script is taken from [Fedora](https://src.fedoraproject.org/rpms/firefox.git); manifest, preferences, polices and appstream metadata, wrapper are taken from [Mozilla](https://hg.mozilla.org/mozilla-central/file/tip/taskcluster/docker/firefox-flatpak). The only difference in permissions is `--socket=x11` is not exposed rather `--socket=fallback-x11` is exposed.
-
-Native Wayland with `MOZ_ENABLE_WAYLAND=1` is enabled if the desktop environment is GNOME/KDE/Sway and if the `WAYLAND_DISPLAY` variable is set.
+The flatpak is built from the official Nightly tarball published by Mozilla. The search provider, desktop file, run script, manifest, preferences, polices and appstream metadata are taken from [Mozilla](https://hg.mozilla.org/mozilla-central/file/tip/taskcluster/docker/firefox-flatpak).
 
 There are no plans for aarch64 builds. Mozilla does not publish tarballs for aarch64 and building from source is not possible.
 
@@ -63,7 +65,9 @@ Otherwise feel free to open an issue here.
 
 ## Credits
 
-Original project: https://gitlab.com/proletarius101/firefox-nightly-flatpak
+Mozilla for maintaing the stable flatpak recipies.
+
+Original Nightly flatpak project: https://gitlab.com/proletarius101/firefox-nightly-flatpak
 
 ## Set up personal repo
 
@@ -75,17 +79,15 @@ Original project: https://gitlab.com/proletarius101/firefox-nightly-flatpak
 
 4. Go to https://gitlab.com/-/profile/personal_access_tokens, create a token for `$CI_GIT_TOKEN`.
 
-5. Go to `https://gitlab.com/<user>/<project>/-/settings/ci_cd`, expand `General` and disable public pipeline. Hit save.
+5. Go to `https://gitlab.com/<user>/<project>/-/settings/ci_cd`, expand `General` and disable public pipeline. Hit save. Expand variables. Add the following [variables](https://docs.gitlab.com/ee/ci/variables/#add-a-cicd-variable-to-a-project) necessary for the pipeline to run:
 
-Expand variables. Add the following [variables](https://docs.gitlab.com/ee/ci/variables/#add-a-cicd-variable-to-a-project) necessary for the pipeline to run:
-
-| Type     | Key            | Value                 | Protected | Masked   |
-|----------|----------------|-----------------------|-----------|----------|
-| Variable | GPG_KEY_GREP   | Keygrip of GPG key    | Yes       | Optional |
-| Variable | GPG_KEY_ID     | Keyid of GPG key      | Yes       | Optional |
-| File     | GPG_PASSPHRASE | Passphrase of GPG Key | Yes       | Optional |
-| File     | GPG_PRIVATE_KEY| ASCII armoured private key | Yes  | Optional |
-| Variable | CI_GIT_TOKEN   | Token                 | Yes       | Optional |
+   | Type     | Key            | Value                 | Protected | Masked   |
+   |----------|----------------|-----------------------|-----------|----------|
+   | Variable | GPG_KEY_GREP   | Keygrip of GPG key    | Yes       | Optional |
+   | Variable | GPG_KEY_ID     | Keyid of GPG key      | Yes       | Optional |
+   | File     | GPG_PASSPHRASE | Passphrase of GPG Key | Yes       | Optional |
+   | File     | GPG_PRIVATE_KEY| ASCII armoured private key | Yes  | Optional |
+   | Variable | CI_GIT_TOKEN   | Token                 | Yes       | Optional |
 
 6. Make a push or trigger the pipeline. If successful, a page wall be deployed at `https://username.gitlab.io/firefox-nightly-flatpak`
 

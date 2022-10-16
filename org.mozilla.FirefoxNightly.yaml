@@ -11,7 +11,6 @@ add-extensions:
     add-ld-path: .
     no-autodownload: true
     version: '22.08'
-  # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#92-95
   org.mozilla.FirefoxNightly.Locale:
     directory: share/runtime/langpack
     autodelete: true
@@ -50,62 +49,56 @@ finish-args:
 
   - --own-name=org.mpris.MediaPlayer2.firefox.*
   - --own-name=org.mozilla.firefox.*
+  - --own-name=org.mozilla.firefox_nightly.*
 
 cleanup-commands:
   - mkdir -p ${FLATPAK_DEST}/lib/ffmpeg
 
 modules:
-  - name: metadata
+  - name: search-provider
     buildsystem: simple
     build-commands:
-      # Install the wrapper script to start it.
-      - sed -i -e 's/__DEFAULT_WAYLAND__/true/' -e "s,/__PREFIX__/bin/firefox,/__PREFIX__/bin/firefox-nightly,g"
-        -e "s,/__PREFIX__,${FLATPAK_DEST},g" -e "s|%FLATPAK_ENV_VARS%|export TMPDIR=\"\$XDG_CACHE_HOME/tmp\"|"
-        firefox.sh.in
-      - install -Dm 755 firefox.sh.in ${FLATPAK_DEST}/bin/firefox-nightly
-
-      # Desktop Entry
-      - sed -i -e "s,Exec=firefox ,Exec=firefox-nightly --name ${FLATPAK_ID} ,g" -e
-        "s,Icon=firefox,Icon=${FLATPAK_ID},g" -e "s,Name=Firefox,Name=Firefox Nightly,g"
-        firefox.desktop
-      - install -Dm644 firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
-
-      # Search Provider
       - sed -i -e "s/firefox.desktop/${FLATPAK_ID}.desktop/" firefox-search-provider.ini
       - install -Dm644 firefox-search-provider.ini ${FLATPAK_DEST}/share/gnome-shell/search-providers/${FLATPAK_ID}-search-provider.ini
     sources:
-      - type: git
-        url: https://src.fedoraproject.org/rpms/firefox.git
-        branch: main
+      - type: file
+        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/browser/components/shell/search-provider-files/firefox-search-provider.ini
+        sha256: bd1552045fe32411cf1d0368c69735a95816cf1ddb32ea1a0059fd2f6a694f71
 
-  # Use the mozilla-provided metadata which has better presentation
+  - name: desktop-file
+    buildsystem: simple
+    build-commands:
+      - sed -i -e "s/Exec=firefox/Exec=firefox-nightly/g" -e "s/Icon=org.mozilla.firefox/Icon=${FLATPAK_ID}/g" -e "s/Name=Firefox/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=firefox-nightly/g" org.mozilla.firefox.desktop
+      - install -Dm644 org.mozilla.firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+    sources:
+      - type: file
+        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
+        sha256: ab834b26737a75ccee9371e7583aa4c4b91b1e49578958ed8802ea7cc3ef239c
+
+  - name: launch-script
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 launch-script.sh ${FLATPAK_DEST}/bin/firefox-nightly
+    sources:
+      - type: file
+        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/taskcluster/docker/firefox-flatpak/launch-script.sh
+        sha256: 7f84cdc1f433b67c2f7771417d17ff6999ca317447cf090b63315c273567e747
+
   - name: metainfo
     buildsystem: simple
     build-options:
       env:
-        VERSION: '88.0'
+        VERSION: '107.0a1'
     build-commands:
       - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
         -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
       - install -Dm644 org.mozilla.firefox.appdata.xml.in ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/ffe056c7c496395708f643aeb00910622d689f64/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
-        sha256: c46f8b4efd19a3ca34cfb3b3d61c5a178db5839694cfe2675fca4620eaa807ab
+        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
+        sha256: 3bc26939ff27a2e39e257ce8aecd703a4c06d98bbdbbdb867b7009b55d2dbb5f
         dest-filename: org.mozilla.firefox.appdata.xml.in
 
-  - name: run-mozilla
-    buildsystem: simple
-    build-commands:
-      # Copy over run-mozilla.sh
-      - install -Dm755 run-mozilla.sh ${FLATPAK_DEST}/lib/firefox/run-mozilla.sh
-    sources:
-      - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/e5591aaa2cdc8ace99686b1e09bcd5d4c7c39fa6/build/unix/run-mozilla.sh
-        sha256: e7fadbe1e407362d492263b5dcb66b131605643611e200bf526b4a52ae2a636b
-        dest-filename: run-mozilla.sh
-
-  # https://bugzilla.mozilla.org/show_bug.cgi?id=1675312
   - name: default-preferences
     buildsystem: simple
     build-commands:
@@ -120,25 +113,21 @@ modules:
       - install -Dm644 policies.json ${FLATPAK_DEST}/lib/firefox/distribution/policies.json
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/ffe056c7c496395708f643aeb00910622d689f64/taskcluster/docker/firefox-flatpak/policies.json
+        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/taskcluster/docker/firefox-flatpak/policies.json
         sha256: 35b68797094749f1d0553b3bc9f4154f323729c0d37345e472f249aab73be1bf
         dest-filename: policies.json
 
-  # https://mozilla.design/firefox/logos-usage/
-  # https://3u26hb1g25wn1xwo8g186fnd-wpengine.netdna-ssl.com/files/2019/10/Firefox-Browser-Nightly-Logo-Assets.zip
   - name: icons
     buildsystem: simple
     build-commands:
       - install -Dm644 "Fx-Browser-Nightly-icon-fullColor.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
-
-      # symbolic-icon
       - install -Dm644 "Fx-Browser-Nightly-icon-oneColor-white.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
     sources:
       - type: archive
+        # https://mozilla.design/firefox/#logos-usage
         url: https://3u26hb1g25wn1xwo8g186fnd-wpengine.netdna-ssl.com/files/2019/10/Firefox-Browser-Nightly-Logo-Assets.zip
         sha256: 171804ae3ded7446b7719f656c2124a9e425896f692cecddb8b86708a0105b11
 
-  # https://searchfox.org/mozilla-central/source/taskcluster/docker/firefox-flatpak/runme.sh#52
   - name: distribution
     buildsystem: simple
     build-commands:
@@ -152,23 +141,16 @@ modules:
   - name: firefox-nightly
     buildsystem: simple
     build-commands:
-      ## Firefox explicitly supports python3, so its also our choice of interpreter. Note that there is no dependency on python.
-      ## These scripts are only used when generating debug information in case of a crash, so not critical to the operation of firefox.
       - find . -name '*.py' -type f -exec sed -i -e 's,!/usr/bin/python,!/usr/bin/python3,'
         -e 's,/usr/bin/env python,/usr/bin/env python3,' -s {} \;
 
-      # - for size in 16 32 48 64 128; do [[ -e "browser/chrome/icons/default/default${size}.png"
-      #   ]] && install -Dm644 "browser/chrome/icons/default/default${size}.png" "${FLATPAK_DEST}/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
-      #   done
-
-      # Blobs provided by Mozilla
       - cp -rf . ${FLATPAK_DEST}/lib/firefox
       - rm -f ${FLATPAK_DEST}/lib/firefox/firefox-config
       - rm -f ${FLATPAK_DEST}/lib/firefox/update-settings.ini
     sources:
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-107.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: d552c4f68aef3abd248d6d0f46908969360cb2554c4abaff26c5fbe14f253119
+        sha256: 8b16bde9c1cf63702d2635cdf60ad9e4a11ebc87387a632348260e2c7bc451be
         x-checker-data:
           type: html
           url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
@@ -178,8 +160,8 @@ modules:
   - name: languagepacks
     buildsystem: simple
     build-commands:
-      # https://github.com/flathub/org.mozilla.Thunderbird/blob/master/org.mozilla.Thunderbird.json#L181
       - mkdir -p /app/firefox/distribution/extensions
+      # https://github.com/flathub/org.mozilla.Thunderbird/blob/22e4c5bfffa1a28507a0009c3c84c4f17d69c262/org.mozilla.Thunderbird.json#L244
       - for lang in langpacks/*.xpi;do export locale=$(basename -s .xpi $lang); install
         -Dm644 -t /app/share/runtime/locale/${locale:9:2}/ $lang; ln -sf /app/share/runtime/locale/${locale:9:2}/$(basename
         $lang) /app/firefox/distribution/extensions/$(basename $lang); done
