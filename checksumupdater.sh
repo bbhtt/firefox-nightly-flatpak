@@ -2,9 +2,9 @@
 
 export MANIFEST_PATH=$CI_PROJECT_DIR/$APP_ID.yaml
 
-sed '170!d' $MANIFEST_PATH|grep -Po '\w\K/\w+[^?]+' > url;
+sed '152!d' $MANIFEST_PATH|grep -Po '\w\K/\w+[^?]+' > url;
 wget -nv https://download-installer.cdn.mozilla.net$(cat url);
 sha256sum firefox-*.tar.bz2|cut -d " " -f 1 > shanew;
-sed '171!d' $MANIFEST_PATH|cut -d: -f2|sed 's/^[ \t]*//;s/[ \t]*$//' > shaold;
-shanew=$(cat shanew) && shaold=$(cat shaold) && sed -i "171s/$shaold/$shanew/g" $MANIFEST_PATH;
+sed '153!d' $MANIFEST_PATH|cut -d: -f2|sed 's/^[ \t]*//;s/[ \t]*$//' > shaold;
+shanew=$(cat shanew) && shaold=$(cat shaold) && sed -i "153s/$shaold/$shanew/g" $MANIFEST_PATH;
 rm url sha* *.tar.bz2;
