@@ -32,10 +32,17 @@ Updates will be fetched if available
 flatpak update
 ```
 
+**Note**. Gitlab.com free tier gives 400 minutes per month of [pipeline quota](https://about.gitlab.com/blog/2020/09/01/ci-minutes-update-free-users/#changes-to-the-gitlabcom-free-tier) for entire the user/project namespace.
+A single build usually takes about ~15 minutes to complete and deploy and there is one nightly build published each day.
+If updates are not available for a while then usually it means the pipeline quota expired for the month and it'll reset in
+the next month. Please don't open an issue for this, there's nothing I can do about this other than purchasing additional quota.
+In this case please set up your own repository following the [instructions](https://gitlab.com/bbhtt/firefox-nightly-flatpak#set-up-personal-repo) below or build and install
+the flatpak locally following the [instructions](https://gitlab.com/bbhtt/firefox-nightly-flatpak#build-locally) below.
+
 ## Uninstall
 
 ```bash
-# Clears profile
+# Clear the profile
 flatpak remove --delete-data org.mozilla.FirefoxNightly
 # Clear dependencies
 flatpak uninstall --unused
@@ -67,7 +74,9 @@ Otherwise feel free to open an issue here.
 
 Mozilla for maintaing the stable flatpak recipies.
 
-Original Nightly flatpak project: https://gitlab.com/proletarius101/firefox-nightly-flatpak
+Original Nightly flatpak project https://gitlab.com/proletarius101/firefox-nightly-flatpak and CI templates https://gitlab.com/accessable-net/gitlab-ci-templates
+
+Logo: [Source](https://www.creativetail.com/40-free-flat-animal-icons/), [License](https://www.creativetail.com/licensing/)
 
 ## Set up personal repo
 
@@ -101,3 +110,40 @@ base64 example.gpg | tr -d '\n'
 8. Set up a [schedule](https://docs.gitlab.com/ee/ci/pipelines/schedules.html) `https://gitlab.com/<username>/<project>/-/pipeline_schedules`
 
 9. Install the flatpakref file as in step #4. Done!
+
+This can be done with your own server using Flat-manager, see https://docs.flatpak.org/en/latest/hosting-a-repository.html for instructions.
+
+## Build locally
+
+1. Clone this repository
+
+
+```bash
+git clone https://gitlab.com/bbhtt/firefox-nightly-flatpak.git
+cd firefox-nightly-flatpak
+```
+
+2. Install flatpak, [flatpak-builder](https://gitlab.com/bbhtt/firefox-nightly-flatpak.git) and set up the Flathub repository
+
+3. Install the dependencies
+
+```bash
+flatpak install --user flathub org.freedesktop.Sdk//22.08
+flatpak install --user flathub org.freedesktop.Platform//22.08
+flatpak install --user flathub org.mozilla.firefox.BaseApp//22.08
+```
+3. Run this command to build
+
+```bash
+flatpak-build build --force-clean org.mozilla.FirefoxNightly.yaml
+```
+
+4. To install
+
+```bash
+flatpak-build build --force-clean --user --install org.mozilla.FirefoxNightly.yaml
+```
+
+5. To update, change this [URL](https://gitlab.com/bbhtt/firefox-nightly-flatpak/-/blob/77bc4cb34c58a460615a08f8f552b713e80fc5af/org.mozilla.FirefoxNightly.yaml#L152) and the [sha256](https://gitlab.com/bbhtt/firefox-nightly-flatpak/-/blob/77bc4cb34c58a460615a08f8f552b713e80fc5af/org.mozilla.FirefoxNightly.yaml#L153) to point to the latest sources. Then redo step #3 and #4.
+
+6. (Optional) To build a bundle follow https://docs.flatpak.org/en/latest/single-file-bundles.html
