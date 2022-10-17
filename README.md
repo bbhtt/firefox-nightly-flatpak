@@ -72,7 +72,7 @@ Otherwise feel free to open an issue here.
 
 ## Credits
 
-Mozilla for maintaing the stable flatpak recipies.
+Mozilla for mainlining the stable flatpak recipes.
 
 Original Nightly flatpak project https://gitlab.com/proletarius101/firefox-nightly-flatpak and CI templates https://gitlab.com/accessable-net/gitlab-ci-templates
 
@@ -135,13 +135,13 @@ flatpak install --user flathub org.mozilla.firefox.BaseApp//22.08
 3. Run this command to build
 
 ```bash
-flatpak-build build --force-clean org.mozilla.FirefoxNightly.yaml
+flatpak-builder build --force-clean org.mozilla.FirefoxNightly.yaml
 ```
 
 4. To install
 
 ```bash
-flatpak-build build --force-clean --user --install org.mozilla.FirefoxNightly.yaml
+flatpak-builder build --force-clean --user --install org.mozilla.FirefoxNightly.yaml
 ```
 
 5. To update, change this [URL](https://gitlab.com/bbhtt/firefox-nightly-flatpak/-/blob/77bc4cb34c58a460615a08f8f552b713e80fc5af/org.mozilla.FirefoxNightly.yaml#L152) and the [sha256](https://gitlab.com/bbhtt/firefox-nightly-flatpak/-/blob/77bc4cb34c58a460615a08f8f552b713e80fc5af/org.mozilla.FirefoxNightly.yaml#L153) to point to the latest sources. Then redo step #3 and #4.
