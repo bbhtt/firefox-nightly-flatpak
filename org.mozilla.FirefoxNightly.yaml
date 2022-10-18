@@ -153,11 +153,11 @@ modules:
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-108.0a1.en-US.linux-x86_64.tar.bz2
         sha256: 9d5a13c7ba455c5349a96232e81ae0e714da56e73fe2954446c51bcb23d95d7f
-        x-checker-data:
-          type: html
-          url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
-          version-pattern: firefox-([a\d\.-]+).en-US.linux-x86_64.tar.bz2
-          url-template: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
+#        x-checker-data:
+#          type: html
+#          url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
+#          version-pattern: firefox-([a\d\.-]+).en-US.linux-x86_64.tar.bz2
+#          url-template: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
 
   - name: languagepacks
     buildsystem: simple
