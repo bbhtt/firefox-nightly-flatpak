@@ -68,7 +68,9 @@ modules:
   - name: desktop-file
     buildsystem: simple
     build-commands:
-      - sed -i -e "s/Exec=firefox/Exec=firefox-nightly/g" -e "s/Icon=org.mozilla.firefox/Icon=${FLATPAK_ID}/g" -e "s/Name=Firefox/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=firefox-nightly/g" org.mozilla.firefox.desktop
+      - sed -i -e "s/Exec=firefox/Exec=firefox-nightly/g" -e "s/Icon=org.mozilla.firefox/Icon=${FLATPAK_ID}/g"
+        -e "s/Name=Firefox/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=firefox-nightly/g"
+        org.mozilla.firefox.desktop
       - install -Dm644 org.mozilla.firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
     sources:
       - type: file
@@ -88,7 +90,7 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        VERSION: '107.0a1'
+        VERSION: 108.0a1
     build-commands:
       - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
         -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
@@ -149,8 +151,8 @@ modules:
       - rm -f ${FLATPAK_DEST}/lib/firefox/update-settings.ini
     sources:
       - type: archive
-        url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-107.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: d1698256cd95ecdcf3d76e0ca9f1987e474a4fddc2387ff3bdb1f067b7f6f1dc
+        url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-108.0a1.en-US.linux-x86_64.tar.bz2
+        sha256: 9d5a13c7ba455c5349a96232e81ae0e714da56e73fe2954446c51bcb23d95d7f
         x-checker-data:
           type: html
           url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
