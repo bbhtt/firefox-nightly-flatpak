@@ -1,7 +1,7 @@
 include:
-  - https://gitlab.com/bbhtt/gitlab-ci-templates/-/raw/master/flatpak.yml
-  - https://gitlab.com/bbhtt/gitlab-ci-templates/-/raw/master/flatpak-updater.yml
-  - https://gitlab.com/bbhtt/gitlab-ci-templates/-/raw/master/mozilla-langpacks-update.yml
+  - https://gitlab.com/bbhtt/gitlab-ci-templates/-/raw/main/flatpak.yml
+  - https://gitlab.com/bbhtt/gitlab-ci-templates/-/raw/main/flatpak-updater.yml
+  - https://gitlab.com/bbhtt/gitlab-ci-templates/-/raw/main/mozilla-langpacks-update.yml
 
 variables:
   APP_ID: org.mozilla.FirefoxNightly
