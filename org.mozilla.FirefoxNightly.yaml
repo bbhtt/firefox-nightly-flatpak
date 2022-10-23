@@ -152,7 +152,7 @@ modules:
     sources:
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-108.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: 968cc001c497ac6195165fbdcda953b420b42dfe4f591fdfe4ce619ce251e356
+        sha256: 5501322d6846eb9e2b7d0097d0352706bd6fb9501123695cf11704a7d5cf17f6
 #        x-checker-data:
 #          type: html
 #          url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
