@@ -17,7 +17,7 @@ newrelease=$(cat newrelease) && oldrelease=$(cat oldrelease) && sed -i "154s/$ol
 sed '154!d' $MANIFEST_PATH|sed -n '{s|.*/firefox-\(.*\)\.tar.bz2|\1|p;q;}' > updrelease;
 
 # Download the latest version
-wget -nv https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-$(cat updrelease).checksums;
+wget -nv https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-$(cat updrelease).checksums;
 
 # Calculate the new checksum
 cat firefox-$(cat updrelease).checksums|grep "$(cat updrelease).tar.bz2"|grep -v asc|grep -v sha512|cut -d " " -f1 > shanew;
