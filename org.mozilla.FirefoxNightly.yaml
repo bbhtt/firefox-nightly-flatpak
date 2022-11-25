@@ -151,7 +151,7 @@ modules:
     sources:
       - type: archive
         url: https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/firefox-109.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: 78a796ca85049555faa209400225ee3673ccef938967749c2ab7d6e27c9cd563
+        sha256: a252ad63d7b6211b137c988b60c5915d50b0fc59c83c09ba614b67b3b5473c6d
 #        x-checker-data:
 #          type: html
 #          url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
