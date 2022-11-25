@@ -26,7 +26,7 @@ cat firefox-$(cat updrelease).checksums|grep "$(cat updrelease).tar.bz2"|grep -v
 sed '154!d' $MANIFEST_PATH|cut -d: -f2|sed 's/^[ \t]*//;s/[ \t]*$//' > shaold;
 
 # Replace the checksum
-shanew=$(cat shanew) && shaold=$(cat shaold) && sed -i "155s/$shaold/$shanew/g" $MANIFEST_PATH;
+shanew=$(cat shanew) && shaold=$(cat shaold) && sed -i "154s/$shaold/$shanew/g" $MANIFEST_PATH;
 
 # Delete the leftovers
 rm *release sha* *.checksums;
