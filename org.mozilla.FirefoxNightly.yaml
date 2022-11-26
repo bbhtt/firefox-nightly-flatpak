@@ -158,13 +158,13 @@ modules:
 #          version-pattern: firefox-([a\d\.-]+).en-US.linux-x86_64.tar.bz2
 #          url-template: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
 
-  - name: languagepacks
-    buildsystem: simple
-    build-commands:
-      - mkdir -p /app/firefox/distribution/extensions
+#  - name: languagepacks
+#    buildsystem: simple
+#    build-commands:
+#      - mkdir -p /app/firefox/distribution/extensions
       # https://github.com/flathub/org.mozilla.Thunderbird/blob/22e4c5bfffa1a28507a0009c3c84c4f17d69c262/org.mozilla.Thunderbird.json#L244
-      - for lang in langpacks/*.xpi;do export locale=$(basename -s .xpi $lang); install
-        -Dm644 -t /app/share/runtime/locale/${locale:9:2}/ $lang; ln -sf /app/share/runtime/locale/${locale:9:2}/$(basename
-        $lang) /app/firefox/distribution/extensions/$(basename $lang); done
-    sources:
-      - generated-sources.json
+#      - for lang in langpacks/*.xpi;do export locale=$(basename -s .xpi $lang); install
+#        -Dm644 -t /app/share/runtime/locale/${locale:9:2}/ $lang; ln -sf /app/share/runtime/locale/${locale:9:2}/$(basename
+#        $lang) /app/firefox/distribution/extensions/$(basename $lang); done
+#    sources:
+#      - generated-sources.json
