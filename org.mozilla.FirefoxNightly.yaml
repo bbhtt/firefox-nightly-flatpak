@@ -153,10 +153,9 @@ modules:
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-109.0a1.en-US.linux-x86_64.tar.bz2
         sha256: 6c9743f892d9cbe9cf57ad26b73d47a0f03114a0e658567f41f40e3a3f4155c6
 #        x-checker-data:
-#          type: html
-#          url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/
-#          version-pattern: firefox-([a\d\.-]+).en-US.linux-x86_64.tar.bz2
-#          url-template: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-$version.en-US.linux-x86_64.tar.bz2
+#          type: rotating-url
+#          url: https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US
+#          pattern: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-([0-9.]+)a([0-9.]+).en-US.linux-x86_64.tar.bz2
 
   - name: languagepacks
     buildsystem: simple
