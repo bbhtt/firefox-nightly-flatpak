@@ -81,9 +81,9 @@ Logo: [Source](https://www.creativetail.com/40-free-flat-animal-icons/), [Licens
 
 ## Set up personal repo
 
-1. Fork https://gitlab.com/proletarius101/firefox-nightly-flatpak and https://gitlab.com/accessable-net/gitlab-ci-templates/
+1. Fork https://gitlab.com/projects261/firefox-nightly-flatpak and https://gitlab.com/bbhtt/gitlab-ci-templates
 
-2. Clone the repostories and update the URLs in `.gitlab-ci.yml` to point to the fork. Update other files if needed.
+2. Clone the repostories and update the URLs in `.gitlab-ci.yml` to point to the forks. Update other files if needed.
 
 3. Create a new GPG key locally, to sign the repository.
 
@@ -112,7 +112,16 @@ base64 example.gpg | tr -d '\n'
 
 9. Install the flatpakref file as in step #4. Done!
 
-This can be done with your own server using Flat-manager, see https://docs.flatpak.org/en/latest/hosting-a-repository.html for instructions.
+Note.
+
+My fork uses a bash script `updater.sh` to update the Firefox versions and checksums and my CI template pushes the changes directly to the `main` branch to save on CI minutes and as the variables above are exposed to the `main` branch only.
+You can also use `flatpak-external-data-checker` like upstream. For that uncomment https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L155-L158
+and use the CI templates from upstream https://gitlab.com/accessable-net/gitlab-ci-templates
+
+The langpacks are updated manually due to frequent checksum mismatches in the Gitlab shared runners, possible due to a CDN or a cache issue. They can also beYou can also use `flatpak-external-data-checker` like upstream.
+To automate them uncomment https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/.gitlab-ci.yml#L4
+
+This can also be done with your own server using Flat-manager, see https://docs.flatpak.org/en/latest/hosting-a-repository.html for instructions.
 
 ## Build locally
 
