@@ -43,12 +43,9 @@ the flatpak locally following the [instructions](https://gitlab.com/projects261/
 ## Uninstall
 
 ```bash
-# Clear the profile
-flatpak remove --delete-data org.mozilla.FirefoxNightly
+flatpak remove [--delete-data] org.mozilla.FirefoxNightly
 # Clear dependencies
 flatpak uninstall --unused
-# Delete the remote
-flatpak remote-delete firefoxnightly-origin
 ```
 
 ## Notes
@@ -81,7 +78,7 @@ Logo: [Source](https://www.creativetail.com/40-free-flat-animal-icons/), [Licens
 
 ## Set up personal repo
 
-1. Fork https://gitlab.com/projects261/firefox-nightly-flatpak and https://gitlab.com/bbhtt/gitlab-ci-templates
+1. Fork https://gitlab.com/projects261/firefox-nightly-flatpak and https://gitlab.com/projects261/gitlab-ci-templates
 
 2. Clone the repostories and update the URLs in `.gitlab-ci.yml` to point to the forks. Update other files if needed.
 
@@ -152,5 +149,6 @@ flatpak-builder build --force-clean org.mozilla.FirefoxNightly.yaml
 flatpak-builder build --force-clean --user --install org.mozilla.FirefoxNightly.yaml
 ```
 
-5. To update, change this [URL](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/a1e15183d6926699d7025fdb7dbeb6ff6a60754a/org.mozilla.FirefoxNightly.yaml#L154) and the sha256 below and redo step #3 and #4.
+5. To update, change this [URL](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L153) and the [sha256](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L154) below and redo step #3 and #4
+
 6. (Optional) To build a bundle follow https://docs.flatpak.org/en/latest/single-file-bundles.html
