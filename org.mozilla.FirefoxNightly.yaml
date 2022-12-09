@@ -61,7 +61,7 @@ modules:
       - install -Dm644 firefox-search-provider.ini ${FLATPAK_DEST}/share/gnome-shell/search-providers/${FLATPAK_ID}-search-provider.ini
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/browser/components/shell/search-provider-files/firefox-search-provider.ini
+        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/browser/components/shell/search-provider-files/firefox-search-provider.ini
         sha256: bd1552045fe32411cf1d0368c69735a95816cf1ddb32ea1a0059fd2f6a694f71
 
   - name: desktop-file
@@ -73,8 +73,8 @@ modules:
       - install -Dm644 org.mozilla.firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
-        sha256: ab834b26737a75ccee9371e7583aa4c4b91b1e49578958ed8802ea7cc3ef239c
+        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
+        sha256: 66ffbeeac11e352ae1f6f38d04796c090b1d59d1a9c7f900f42af5ef91ce47e8
 
   - name: launch-script
     buildsystem: simple
@@ -82,7 +82,7 @@ modules:
       - install -Dm755 launch-script.sh ${FLATPAK_DEST}/bin/firefox-nightly
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/taskcluster/docker/firefox-flatpak/launch-script.sh
+        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb/taskcluster/docker/firefox-flatpak/launch-script.sh
         sha256: 7f84cdc1f433b67c2f7771417d17ff6999ca317447cf090b63315c273567e747
 
   - name: metainfo
@@ -96,7 +96,7 @@ modules:
       - install -Dm644 org.mozilla.firefox.appdata.xml.in ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
+        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
         sha256: 3bc26939ff27a2e39e257ce8aecd703a4c06d98bbdbbdb867b7009b55d2dbb5f
         dest-filename: org.mozilla.firefox.appdata.xml.in
 
@@ -106,7 +106,8 @@ modules:
       - install -Dm644 default-preferences.js ${FLATPAK_DEST}/lib/firefox/browser/defaults/preferences/default-preferences.js
     sources:
       - type: file
-        path: default-preferences.js
+        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/taskcluster/docker/firefox-flatpak/default-preferences.js
+        sha256: 23faaa790d55eab99c7131008b47859c100297a74eb53530763e34c5f4eebed1
 
   - name: policies
     buildsystem: simple
@@ -114,7 +115,7 @@ modules:
       - install -Dm644 policies.json ${FLATPAK_DEST}/lib/firefox/distribution/policies.json
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/c9ad12757bb5e3ad162bc8920a42cc14f7859bec/taskcluster/docker/firefox-flatpak/policies.json
+        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/taskcluster/docker/firefox-flatpak/policies.json
         sha256: 35b68797094749f1d0553b3bc9f4154f323729c0d37345e472f249aab73be1bf
         dest-filename: policies.json
 
