@@ -125,13 +125,11 @@ modules:
       - install -Dm644 "firefox-logo-nightly.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
       - install -Dm644 "firefox-logo-glyph.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
     sources:
-      # https://design.firefox.com/photon/visuals/product-identity-assets.html
+      # https://design.firefox.com/photon/visuals/product-identity-assets.html, but svg does not have square dimentions, so fails validation
       - type: file
-        url: https://design.firefox.com/product-identity/firefox-nightly/firefox-logo-nightly.svg
-        sha256: 96c4f74ffee054ce486a21af2a013de17c53a2691bcaf773653fd046a661266a
+        path: firefox-logo-nightly.svg
       - type: file
-        url: https://design.firefox.com/product-identity/firefox-glyph/firefox-logo-glyph.svg
-        sha256: 1c58ab57728d2342dae9fdf68cc54b997c65de5f40a31f735cedcd6cea2ec262
+        path: firefox-logo-glyph.svg
 
   - name: distribution
     buildsystem: simple
