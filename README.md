@@ -32,13 +32,11 @@ Updates will be fetched if available
 flatpak update
 ```
 
-**Note**. Gitlab.com free tier gives 400 minutes per month of [pipeline quota](https://about.gitlab.com/blog/2020/09/01/ci-minutes-update-free-users/#changes-to-the-gitlabcom-free-tier) for entire the user/project namespace.
-A single build usually takes about ~15 minutes to complete and deploy and there is one nightly build published each day.
-If updates are not available for a while then usually it means the pipeline quota expired for the month and it'll reset in
-the next month.
+## Notes
 
-Please set up your own repository if possible, following the [instructions](https://gitlab.com/projects261/firefox-nightly-flatpak#set-up-personal-repo) below or build and install
-the flatpak locally following the [instructions](https://gitlab.com/projects261/firefox-nightly-flatpak#build-locally) below.
+Gitlab.com free tier gives 400 minutes per month of [pipeline quota](https://about.gitlab.com/blog/2020/09/01/ci-minutes-update-free-users/#changes-to-the-gitlabcom-free-tier) for entire the user/project namespace. A single build usually takes about ~15 minutes to complete and deploy and there is one nightly build published each day. If updates are not available for a while then usually it means the pipeline quota expired for the month and it'll reset in the next month.
+
+Please set up your own repository if possible, following the [instructions](https://gitlab.com/projects261/firefox-nightly-flatpak#set-up-personal-repo) below or build and install the flatpak locally following the [instructions](https://gitlab.com/projects261/firefox-nightly-flatpak#build-locally) below.
 
 ## Uninstall
 
@@ -111,9 +109,7 @@ base64 example.gpg | tr -d '\n'
 
 ## Notes
 
-My fork uses a script `updater.sh` to update the Firefox versions and checksums and my CI template pushes the changes directly to the `main` branch to save on CI minutes and as the variables above are exposed to the `main` branch only. You can also use `flatpak-external-data-checker` like upstream. For that uncomment https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L155-L158 and use the CI templates from upstream https://gitlab.com/accessable-net/gitlab-ci-templates
-
-The langpacks are updated manually due to frequent checksum mismatches in the Gitlab shared runners, possible due to a CDN or a cache issue. To automate them uncomment https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/.gitlab-ci.yml#L4
+My fork uses a script `updater.sh` to update the Firefox versions and checksums and my CI template pushes the changes directly to the `main` branch to save on CI minutes and as the variables above are exposed to the `main` branch only. You can also use `flatpak-external-data-checker` like upstream. For that uncomment [these lines](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L156-L159) and use the CI templates from [upstream](https://gitlab.com/accessable-net/gitlab-ci-templates). The langpacks are updated manually due to frequent checksum mismatches in the Gitlab shared runners, possible due to a CDN or a cache issue. To automate them uncomment [this](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/.gitlab-ci.yml#L4)
 
 
 This can also be done with your own server using Flat-manager, see https://docs.flatpak.org/en/latest/hosting-a-repository.html for instructions.
@@ -149,6 +145,6 @@ flatpak-builder build --force-clean org.mozilla.FirefoxNightly.yaml
 flatpak-builder build --force-clean --user --install org.mozilla.FirefoxNightly.yaml
 ```
 
-5. To update, change this [URL](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L153) and the [sha256](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L154) below and redo step #3 and #4
+5. To update, change this [URL](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L154) and the [sha256](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L155) below and redo step #3 and #4
 
 6. (Optional) To build a bundle follow https://docs.flatpak.org/en/latest/single-file-bundles.html
