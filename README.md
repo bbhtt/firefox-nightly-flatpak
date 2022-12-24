@@ -148,3 +148,5 @@ flatpak-builder build --force-clean --user --install org.mozilla.FirefoxNightly.
 5. To update, change this [URL](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L154) and the [sha256](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L155) below and redo step #3 and #4
 
 6. (Optional) To build a bundle follow https://docs.flatpak.org/en/latest/single-file-bundles.html
+
+GPG key fingerprint used to sign repo: D53F C6E7 5E0A 45F5 386A  6588 F8A5 F798 CA25 7770
