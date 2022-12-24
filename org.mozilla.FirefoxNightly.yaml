@@ -68,8 +68,7 @@ modules:
     buildsystem: simple
     build-commands:
       - sed -i -e "s/Exec=firefox/Exec=firefox-nightly/g" -e "s/Icon=org.mozilla.firefox/Icon=${FLATPAK_ID}/g"
-        -e "s/Name=Firefox/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=firefox-nightly/g"
-        org.mozilla.firefox.desktop
+        -e "s/Name=Firefox Web Browser/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=firefox-nightly/g" -e "s/Keywords=web;browser;internet;//g" org.mozilla.firefox.desktop
       - install -Dm644 org.mozilla.firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
     sources:
       - type: file
