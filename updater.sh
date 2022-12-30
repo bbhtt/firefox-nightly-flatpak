@@ -1,8 +1,8 @@
 #!/bin/sh
 
-#export MANIFEST_PATH=$CI_PROJECT_DIR/$APP_ID.yaml
+export MANIFEST_PATH=$CI_PROJECT_DIR/$APP_ID.yaml
 
-export MANIFEST_PATH=org.mozilla.FirefoxNightly.yaml
+#export MANIFEST_PATH=org.mozilla.FirefoxNightly.yaml
 
 # Extract the filename for the old release
 sed '153!d' $MANIFEST_PATH|sed -n '{s|.*/firefox-\(.*\)\.tar.bz2|\1|p;q;}' > oldrelease;
@@ -17,14 +17,15 @@ newrelease=$(cat newrelease) && oldrelease=$(cat oldrelease) && sed -i "153s/$ol
 sed '153!d' $MANIFEST_PATH|sed -n '{s|.*/firefox-\(.*\)\.tar.bz2|\1|p;q;}' > updrelease;
 
 # Calculate the version for metadata
-versionold=$(cat oldrelease|head -c 7)
-versionnew=$(cat updrelease|head -c 7)
+versionold=$(cat oldrelease|head -c 7);
+versionnew=$(cat updrelease|head -c 7);
 
 # Replace the version
-sed -i -e "91s/VERSION: $versionold/VERSION: $versionnew/g" $MANIFEST_PATH
+sed -i -e "91s/VERSION: $versionold/VERSION: $versionnew/g" $MANIFEST_PATH;
 
 # Download the latest version
 wget -nv https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-$(cat updrelease).checksums;
+
 # Calculate the new checksum
 cat firefox-$(cat updrelease).checksums|grep "$(cat updrelease).tar.bz2"|grep -v asc|grep -v sha512|cut -d " " -f1 > shanew;
 
