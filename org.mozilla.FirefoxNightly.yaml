@@ -88,7 +88,7 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        VERSION: 108.0a1
+        VERSION: 110.0a1
     build-commands:
       - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
         -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
