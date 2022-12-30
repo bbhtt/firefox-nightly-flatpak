@@ -1,8 +1,8 @@
 #!/bin/sh
 
-export MANIFEST_PATH=$CI_PROJECT_DIR/$APP_ID.yaml
+#export MANIFEST_PATH=$CI_PROJECT_DIR/$APP_ID.yaml
 
-#export MANIFEST_PATH=org.mozilla.FirefoxNightly.yaml
+export MANIFEST_PATH=org.mozilla.FirefoxNightly.yaml
 
 # Extract the filename for the old release
 sed '153!d' $MANIFEST_PATH|sed -n '{s|.*/firefox-\(.*\)\.tar.bz2|\1|p;q;}' > oldrelease;
@@ -15,6 +15,13 @@ newrelease=$(cat newrelease) && oldrelease=$(cat oldrelease) && sed -i "153s/$ol
 
 # Extract the filename again in case of an update
 sed '153!d' $MANIFEST_PATH|sed -n '{s|.*/firefox-\(.*\)\.tar.bz2|\1|p;q;}' > updrelease;
+
+# Calculate the version for metadata
+versionold=$(cat oldrelease|head -c 7)
+versionnew=$(cat updrelease|head -c 7)
+
+# Replace the version
+sed -i -e "91s/VERSION: $versionold/VERSION: $versionnew/g" $MANIFEST_PATH
 
 # Download the latest version
 wget -nv https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-$(cat updrelease).checksums;
