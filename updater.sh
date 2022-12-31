@@ -1,39 +1,38 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-export MANIFEST_PATH=$CI_PROJECT_DIR/$APP_ID.yaml
+set -e
 
-#export MANIFEST_PATH=org.mozilla.FirefoxNightly.yaml
+update () {
 
-# Extract the filename for the old release
-sed '153!d' $MANIFEST_PATH|sed -n '{s|.*/firefox-\(.*\)\.tar.bz2|\1|p;q;}' > oldrelease;
+	relnum=$(awk '/tar.bz2/{print NR; exit}' "$MANIFEST_PATH")
+	vernum=$(awk '/VERSION:/{print NR; exit}' "$MANIFEST_PATH")
+	shanum=$(awk '/sha256/{print NR}' "$MANIFEST_PATH"|tail -n1)
+	oldrelease=$(sed "${relnum}!d" "$MANIFEST_PATH"|sed -n '{s|.*/firefox-\(.*\)\.tar.bz2|\1|p;q;}')
+	newrelease=$(wget -q --spider -S --max-redirect 0 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US" 2>&1 | sed -n '/Location: /{s|.*/firefox-\(.*\)\.tar.*|\1|p;q;}')
+	sed -i "${relnum}s/$oldrelease/$newrelease/g" "$MANIFEST_PATH"
+	updrelease=$(sed "${relnum}!d" "$MANIFEST_PATH"|sed -n '{s|.*/firefox-\(.*\)\.tar.bz2|\1|p;q;}')
+	versionold=$(echo "$oldrelease"|head -c 7)
+	versionnew=$(echo "$updrelease"|head -c 7)
+	sed -i "${vernum}s/VERSION: $versionold/VERSION: $versionnew/g" "$MANIFEST_PATH"
+	wget -q https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-"$updrelease".checksums
+	shanew=$(grep "$updrelease".tar.bz2 < firefox-"$updrelease".checksums|grep -v asc|grep -v sha512|cut -d " " -f1)
+	shaold=$(sed "${shanum}!d" "$MANIFEST_PATH"|cut -d: -f2|sed 's/^[ \t]*//;s/[ \t]*$//')
+	sed -i "${shanum}s/$shaold/$shanew/g" "$MANIFEST_PATH"
+	rm -- *.checksums
 
-# Extract the filename for the new release
-wget -nv --spider -S --max-redirect 0 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US" 2>&1 | sed -n '/Location: /{s|.*/firefox-\(.*\)\.tar.*|\1|p;q;}' > newrelease;
+}
 
-# Replace the filename to update the url
-newrelease=$(cat newrelease) && oldrelease=$(cat oldrelease) && sed -i "153s/$oldrelease/$newrelease/g" $MANIFEST_PATH;
+if [ -z "$CI_PROJECT_DIR" ]; then
+	export APP_ID=org.mozilla.FirefoxNightly
+	export MANIFEST_PATH="$PWD"/"$APP_ID".yaml
+else
+	export MANIFEST_PATH="$CI_PROJECT_DIR"/"$APP_ID".yaml
+fi
 
-# Extract the filename again in case of an update
-sed '153!d' $MANIFEST_PATH|sed -n '{s|.*/firefox-\(.*\)\.tar.bz2|\1|p;q;}' > updrelease;
-
-# Calculate the version for metadata
-versionold=$(cat oldrelease|head -c 7);
-versionnew=$(cat updrelease|head -c 7);
-
-# Replace the version
-sed -i -e "91s/VERSION: $versionold/VERSION: $versionnew/g" $MANIFEST_PATH;
-
-# Download the latest version
-wget -nv https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-$(cat updrelease).checksums;
-
-# Calculate the new checksum
-cat firefox-$(cat updrelease).checksums|grep "$(cat updrelease).tar.bz2"|grep -v asc|grep -v sha512|cut -d " " -f1 > shanew;
-
-# Calculate the old checksum
-sed '154!d' $MANIFEST_PATH|cut -d: -f2|sed 's/^[ \t]*//;s/[ \t]*$//' > shaold;
-
-# Replace the checksum
-shanew=$(cat shanew) && shaold=$(cat shaold) && sed -i "154s/$shaold/$shanew/g" $MANIFEST_PATH;
-
-# Delete the leftovers
-rm *release sha* *.checksums;
+if [ ! -f "$MANIFEST_PATH" ]; then
+	echo "Manifest not found in current working directory"
+	exit 1
+else
+	update
+	exit 0
+fi
