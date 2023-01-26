@@ -68,12 +68,12 @@ modules:
     buildsystem: simple
     build-commands:
       - sed -i -e "s/Exec=firefox/Exec=firefox-nightly/g" -e "s/Icon=org.mozilla.firefox/Icon=${FLATPAK_ID}/g"
-        -e "s/Name=Firefox Web Browser/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=firefox-nightly/g" -e "s/Keywords=web;browser;internet;//g" org.mozilla.firefox.desktop
+        -e "s/Name=Firefox Web Browser/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=firefox-nightly/g" org.mozilla.firefox.desktop
       - install -Dm644 org.mozilla.firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
-        sha256: 66ffbeeac11e352ae1f6f38d04796c090b1d59d1a9c7f900f42af5ef91ce47e8
+        url: https://hg.mozilla.org/mozilla-central/raw-file/b9c4ba78462076c06f3938d19954c88a9504d8fb/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
+        sha256: 8a43ff974a42d575764b3049565b6e7d9e3546d51caeb8af529980a9a85a4d11
 
   - name: launch-script
     buildsystem: simple
