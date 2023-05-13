@@ -17,6 +17,8 @@ add-extensions:
     locale-subset: true
 
 finish-args:
+  - --allow=devel
+
   - --device=dri
 
   - --share=ipc
@@ -32,6 +34,7 @@ finish-args:
 
   - --filesystem=/etc/firefox/policies
   - --filesystem=xdg-download
+  - --filesystem=/run/.heim_org.h5l.kcm-socket
 
   - --persist=.mozilla
 
@@ -61,7 +64,7 @@ modules:
       - install -Dm644 firefox-search-provider.ini ${FLATPAK_DEST}/share/gnome-shell/search-providers/${FLATPAK_ID}-search-provider.ini
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/browser/components/shell/search-provider-files/firefox-search-provider.ini
+        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/browser/components/shell/search-provider-files/firefox-search-provider.ini
         sha256: bd1552045fe32411cf1d0368c69735a95816cf1ddb32ea1a0059fd2f6a694f71
 
   - name: desktop-file
@@ -72,8 +75,8 @@ modules:
       - install -Dm644 org.mozilla.firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/b9c4ba78462076c06f3938d19954c88a9504d8fb/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
-        sha256: 8a43ff974a42d575764b3049565b6e7d9e3546d51caeb8af529980a9a85a4d11
+        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
+        sha256: 8f75776220dcfc4dbd0fa2b1438f26994a5346ce5f229a75f40b9a3d63afad3a
 
   - name: launch-script
     buildsystem: simple
@@ -81,7 +84,7 @@ modules:
       - install -Dm755 launch-script.sh ${FLATPAK_DEST}/bin/firefox-nightly
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb/taskcluster/docker/firefox-flatpak/launch-script.sh
+        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/launch-script.sh
         sha256: 7f84cdc1f433b67c2f7771417d17ff6999ca317447cf090b63315c273567e747
 
   - name: metainfo
@@ -95,8 +98,8 @@ modules:
       - install -Dm644 org.mozilla.firefox.appdata.xml.in ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
-        sha256: 3bc26939ff27a2e39e257ce8aecd703a4c06d98bbdbbdb867b7009b55d2dbb5f
+        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
+        sha256: 88d24b6ef8dd414aea392ccd6be5f2e5331ad4de7b77bf52c430af03955f6d81
         dest-filename: org.mozilla.firefox.appdata.xml.in
 
   - name: default-preferences
@@ -105,7 +108,7 @@ modules:
       - install -Dm644 default-preferences.js ${FLATPAK_DEST}/lib/firefox/browser/defaults/preferences/default-preferences.js
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/taskcluster/docker/firefox-flatpak/default-preferences.js
+        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/default-preferences.js
         sha256: 23faaa790d55eab99c7131008b47859c100297a74eb53530763e34c5f4eebed1
 
   - name: policies
@@ -114,7 +117,7 @@ modules:
       - install -Dm644 policies.json ${FLATPAK_DEST}/lib/firefox/distribution/policies.json
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/408707dd85c50c8acc6f7ae0fdba5ee32295beb0/taskcluster/docker/firefox-flatpak/policies.json
+        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/policies.json
         sha256: 35b68797094749f1d0553b3bc9f4154f323729c0d37345e472f249aab73be1bf
         dest-filename: policies.json
 
