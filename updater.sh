@@ -34,5 +34,4 @@ if [ ! -f "$MANIFEST_PATH" ]; then
 	exit 1
 else
 	update
-	exit 0
 fi
