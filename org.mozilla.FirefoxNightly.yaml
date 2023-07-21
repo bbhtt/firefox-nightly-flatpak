@@ -93,6 +93,7 @@ modules:
       env:
         VERSION: 117.0a1
     build-commands:
+      - sed -i -e "s/Firefox/Firefox Nightly/g" org.mozilla.firefox.appdata.xml.in
       - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
         -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
       - install -Dm644 org.mozilla.firefox.appdata.xml.in ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
@@ -100,7 +101,6 @@ modules:
       - type: file
         url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
         sha256: 88d24b6ef8dd414aea392ccd6be5f2e5331ad4de7b77bf52c430af03955f6d81
-        dest-filename: org.mozilla.firefox.appdata.xml.in
 
   - name: default-preferences
     buildsystem: simple
@@ -119,28 +119,25 @@ modules:
       - type: file
         url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/policies.json
         sha256: 35b68797094749f1d0553b3bc9f4154f323729c0d37345e472f249aab73be1bf
-        dest-filename: policies.json
 
   - name: icons
     buildsystem: simple
     build-commands:
-      - install -Dm644 "nightly-fullcolor128.png" "${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/${FLATPAK_ID}.png"
-      - install -Dm644 "nightly-glyph32.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
+      - install -Dm644 "Fx-Browser-Nightly-icon-fullColor.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
+      - install -Dm644 "Fx-Browser-Nightly-icon-oneColor-white.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
     sources:
-      - type: file
-        path: icons/nightly-fullcolor128.png
-      - type: file
-        path: icons/nightly-glyph32.svg
+      - type: archive
+        url: https://mozilla.design/files/2019/10/Firefox-Browser-Nightly-Logo-Assets.zip
+        sha256: 171804ae3ded7446b7719f656c2124a9e425896f692cecddb8b86708a0105b11
 
   - name: distribution
     buildsystem: simple
     build-commands:
-      - install -Dm644 desktop/flatpak/distribution/distribution.ini ${FLATPAK_DEST}/lib/firefox/distribution/distribution.ini
+      - install -Dm644 distribution.ini ${FLATPAK_DEST}/lib/firefox/distribution/distribution.ini
     sources:
-      - type: git
-        url: https://github.com/mozilla-partners/flatpak.git
-        branch: master
-        commit: ae102c3789bd719c5ff11a67533115132281286e
+      - type: file
+        url: https://raw.githubusercontent.com/mozilla-partners/flatpak/ae102c3789bd719c5ff11a67533115132281286e/desktop/flatpak/distribution/distribution.ini
+        sha256: 021457f3601cc6d01bd267f26ba0571c2cea7bcddce5791a4365f842ce20be19
 
   - name: firefox-nightly
     buildsystem: simple
