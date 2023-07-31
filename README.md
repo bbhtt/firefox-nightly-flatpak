@@ -4,25 +4,15 @@
 
 1. Install [flatpak](https://flatpak.org/setup/) (>=0.11.1), [xdg-desktop-portal](https://github.com/flatpak/xdg-desktop-portal) and its [backends](https://github.com/flatpak/xdg-desktop-portal#using-portals). Latest versions are preferred.
 
-2. Add the Flathub repository if absent
+2. Add the [Flathub](https://flathub.org/setup) repository if absent
+
+3. Install this package
 
 ```bash
-flatpak remote-add [--user] --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install https://gitlab.com/projects261/firefox-nightly-flatpak/-/raw/main/firefox-nightly.flatpakref
 ```
 
-3. Install `ffmpeg-full` (necessary for full codec support)
-
-```bash
-flatpak install [--user] flathub org.freedesktop.Platform.ffmpeg-full//22.08
-```
-
-4. Install this package
-
-```bash
-flatpak install [--user] https://gitlab.com/projects261/firefox-nightly-flatpak/-/raw/main/firefox-nightly.flatpakref
-```
-
-This sets up a new [flatpak remote](https://man7.org/linux/man-pages/man5/flatpak-remote.5.html) called `firefoxnightly-origin` userwide.
+This sets up a new [flatpak remote](https://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-remotes) called `firefoxnightly-origin`.
 
 ## Update
 
@@ -86,7 +76,7 @@ gpg --export <keyid> > example.gpg
 base64 example.gpg | tr -d '\n'
 ```
 
-8. Set up a [schedule](https://docs.gitlab.com/ee/ci/pipelines/schedules.html) `https://gitlab.com/<name>/<project>/-/pipeline_schedules`
+8. Set up a [schedule](https://docs.gitlab.com/ee/ci/pipelines/schedules.html)
 
 9. Install the flatpakref file as in step #4. Done!
 
@@ -104,9 +94,9 @@ The flatpak is built from the official Nightly tarball published by Mozilla. The
 
 There are no plans for aarch64 builds. Mozilla does not publish tarballs for aarch64 and building from source is not possible.
 
-My fork uses a script `updater.sh` to update the Firefox versions and checksums and my CI template pushes the changes directly to the `main` branch to save on CI minutes and as the variables above are exposed to the `main` branch only. 
+My fork uses a script `updater.sh` to update the Firefox versions and checksums and my CI template pushes the changes directly to the `main` branch to save on CI minutes and as the variables above are exposed to the `main` branch only.
 
-You can also use `flatpak-external-data-checker` like upstream. For that uncomment [these lines](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L158-161) and use the CI templates from [upstream](https://gitlab.com/accessable-net/gitlab-ci-templates). 
+You can also use `flatpak-external-data-checker` like upstream. For that uncomment [these lines](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L155-158) and use the CI templates from [upstream](https://gitlab.com/accessable-net/gitlab-ci-templates).
 
 The langpacks are updated manually due to frequent checksum mismatches in the Gitlab shared runners, possibly due to a CDN or a cache issue. To automate them uncomment [this](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/.gitlab-ci.yml#L4).
 
@@ -125,9 +115,9 @@ cd firefox-nightly-flatpak
 3. Install the dependencies
 
 ```bash
-flatpak install --user flathub org.freedesktop.Sdk//22.08
-flatpak install --user flathub org.freedesktop.Platform//22.08
-flatpak install --user flathub org.mozilla.firefox.BaseApp//22.08
+flatpak install flathub org.freedesktop.Sdk//22.08
+flatpak install flathub org.freedesktop.Platform//22.08
+flatpak install flathub org.mozilla.firefox.BaseApp//22.08
 ```
 3. Run this command to build
 
@@ -141,7 +131,7 @@ flatpak-builder build --force-clean org.mozilla.FirefoxNightly.yaml
 flatpak-builder build --force-clean --user --install org.mozilla.FirefoxNightly.yaml
 ```
 
-5. To update, change this [URL](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L156) to point to the latest release and update the [sha256](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L157) below. Then redo step #3 and #4
+5. To update, change this [URL](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L153) to point to the latest release and update the [sha256](https://gitlab.com/projects261/firefox-nightly-flatpak/-/blob/main/org.mozilla.FirefoxNightly.yaml#L154) below. Then redo step #3 and #4
 
 6. (Optional) To build a bundle follow https://docs.flatpak.org/en/latest/single-file-bundles.html
 
