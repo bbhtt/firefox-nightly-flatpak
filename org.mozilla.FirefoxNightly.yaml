@@ -59,7 +59,7 @@ modules:
   - name: search-provider
     buildsystem: simple
     build-commands:
-      - sed -i -e "s/firefox.desktop/${FLATPAK_ID}.desktop/g" -e "s/org\.mozilla\.Firefox\.SearchProvider/org\.mozilla\.firefox_nightly\.SearchProvider/g" -e "s|\/org\/mozilla\/Firefox\/SearchProvider|\/org\/mozilla\/firefox_nightly\/SearchProvider|g"
+      - sed -i -e "s/firefox.desktop/${FLATPAK_ID}.desktop/g" -e "s/org\.mozilla\.Firefox\.SearchProvider/org\.mozilla\.firefox_nightly\.SearchProvider/g" -e "s|\/org\/mozilla\/Firefox\/SearchProvider|\/org\/mozilla\/firefox_nightly\/SearchProvider|g" firefox-search-provider.ini
       - install -Dm644 firefox-search-provider.ini ${FLATPAK_DEST}/share/gnome-shell/search-providers/${FLATPAK_ID}-search-provider.ini
     sources:
       - type: file
