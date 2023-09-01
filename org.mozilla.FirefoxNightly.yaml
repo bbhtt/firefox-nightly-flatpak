@@ -19,7 +19,7 @@ add-extensions:
 finish-args:
   - --allow=devel
 
-  - --device=dri
+  - --device=all
 
   - --share=ipc
   - --share=network
