@@ -70,7 +70,7 @@ modules:
     buildsystem: simple
     build-commands:
       - sed -i -e "s/Exec=firefox/Exec=firefox-nightly/g" -e "s/Icon=org.mozilla.firefox/Icon=${FLATPAK_ID}/g"
-        -e "s/Name=Firefox Web Browser/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=firefox-nightly/g" org.mozilla.firefox.desktop
+        -e "s/Name=Firefox Web Browser/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=org.mozilla.FirefoxNightly/g" org.mozilla.firefox.desktop
       - install -Dm644 org.mozilla.firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
     sources:
       - type: file
@@ -82,9 +82,13 @@ modules:
     build-commands:
       - install -Dm755 launch-script.sh ${FLATPAK_DEST}/bin/firefox-nightly
     sources:
-      - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/launch-script.sh
-        sha256: 7f84cdc1f433b67c2f7771417d17ff6999ca317447cf090b63315c273567e747
+      - type: script
+        dest-filename: launch-script.sh
+        # https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/launch-script.sh
+        commands:
+          - export TMPDIR=$XDG_CACHE_HOME/tmp
+          - exec /app/lib/firefox/firefox --name org.mozilla.FirefoxNightly "$@"
+
 
   - name: metainfo
     buildsystem: simple
