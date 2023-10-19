@@ -1,16 +1,16 @@
 app-id: org.mozilla.FirefoxNightly
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 base: org.mozilla.firefox.BaseApp
-base-version: '22.08'
+base-version: '23.08'
 command: firefox-nightly
 add-extensions:
   org.freedesktop.Platform.ffmpeg-full:
     directory: lib/ffmpeg
     add-ld-path: .
     no-autodownload: true
-    version: '22.08'
+    version: '23.08'
   org.mozilla.FirefoxNightly.Locale:
     directory: share/runtime/langpack
     autodelete: true
