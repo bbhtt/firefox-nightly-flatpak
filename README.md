@@ -124,9 +124,9 @@ cd firefox-nightly-flatpak
 3. Install the dependencies
 
 ```bash
-flatpak install flathub org.freedesktop.Sdk//22.08
-flatpak install flathub org.freedesktop.Platform//22.08
-flatpak install flathub org.mozilla.firefox.BaseApp//22.08
+flatpak install flathub org.freedesktop.Sdk//23.08
+flatpak install flathub org.freedesktop.Platform//23.08
+flatpak install flathub org.mozilla.firefox.BaseApp//23.08
 ```
 3. Run this command to build
 
