@@ -86,7 +86,7 @@ modules:
         # https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/launch-script.sh
         commands:
           - export TMPDIR=$XDG_CACHE_HOME/tmp
-          - exec /app/lib/firefox/firefox --name org.mozilla.FirefoxNightly "$@"
+          - exec /app/lib/firefox/firefox --name org.mozilla.FirefoxNightly --class org.mozilla.FirefoxNightly "$@"
 
 
   - name: metainfo
