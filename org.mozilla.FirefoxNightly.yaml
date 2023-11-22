@@ -15,6 +15,9 @@ add-extensions:
     directory: share/runtime/langpack
     autodelete: true
     locale-subset: true
+  org.mozilla.FirefoxNightly.systemconfig:
+    directory: etc/firefox
+    no-autodownload: true
 
 finish-args:
   - --allow=devel
@@ -31,8 +34,7 @@ finish-args:
   - --socket=wayland
 
   - --require-version=0.11.1
-
-  - --filesystem=/etc/firefox/policies
+  
   - --filesystem=xdg-download
   - --filesystem=/run/.heim_org.h5l.kcm-socket
 
@@ -53,6 +55,7 @@ finish-args:
 
 cleanup-commands:
   - mkdir -p ${FLATPAK_DEST}/lib/ffmpeg
+  - mkdir -p ${FLATPAK_DEST}/etc/firefox
 
 modules:
   - name: search-provider
