@@ -156,7 +156,7 @@ modules:
     sources:
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-122.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: 760ab0c60478ac0643a2cd99029242cbc70ab237cc0fd7b9a06803fd92bbbd12
+        sha256: 57bded4e63fd62049b3c08a657fd31a16de9adf3da7dffc5426e16218fa675a1
 #        x-checker-data:
 #          type: rotating-url
 #          url: https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US
