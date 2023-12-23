@@ -40,8 +40,6 @@ finish-args:
 
   - --persist=.mozilla
 
-  - --env=GTK_PATH=/app/lib/gtkmodules
-
   - --talk-name=org.freedesktop.FileManager1
   - --talk-name=org.a11y.Bus
   - --talk-name=org.gtk.vfs.*
