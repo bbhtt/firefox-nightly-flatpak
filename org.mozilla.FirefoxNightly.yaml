@@ -119,8 +119,8 @@ modules:
       - install -Dm644 distribution.ini ${FLATPAK_DEST}/lib/firefox/distribution/distribution.ini
     sources:
       - type: file
-        url: https://raw.githubusercontent.com/mozilla-partners/flatpak/ae102c3789bd719c5ff11a67533115132281286e/desktop/flatpak/distribution/distribution.ini
-        sha256: 021457f3601cc6d01bd267f26ba0571c2cea7bcddce5791a4365f842ce20be19
+        url: https://raw.githubusercontent.com/mozilla-partners/flatpak/669af66414d0f8114d4bfd4021801738d02f9cd2/desktop/flatpak/distribution/distribution.ini
+        sha256: 5734f9a472d682326c087e92b71c3970e95712f24b1e4d88722669efdb3430a8
 
   - name: firefox-nightly
     buildsystem: simple
