@@ -87,7 +87,6 @@ modules:
           - export TMPDIR=$XDG_CACHE_HOME/tmp
           - exec /app/lib/firefox/firefox --name org.mozilla.FirefoxNightly --class org.mozilla.FirefoxNightly "$@"
 
-
   - name: metainfo
     buildsystem: simple
     build-options:
@@ -102,24 +101,6 @@ modules:
       - type: file
         url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
         sha256: 88d24b6ef8dd414aea392ccd6be5f2e5331ad4de7b77bf52c430af03955f6d81
-
-  - name: default-preferences
-    buildsystem: simple
-    build-commands:
-      - install -Dm644 default-preferences.js ${FLATPAK_DEST}/lib/firefox/browser/defaults/preferences/default-preferences.js
-    sources:
-      - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/default-preferences.js
-        sha256: 23faaa790d55eab99c7131008b47859c100297a74eb53530763e34c5f4eebed1
-
-  - name: policies
-    buildsystem: simple
-    build-commands:
-      - install -Dm644 policies.json ${FLATPAK_DEST}/lib/firefox/distribution/policies.json
-    sources:
-      - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/policies.json
-        sha256: 35b68797094749f1d0553b3bc9f4154f323729c0d37345e472f249aab73be1bf
 
   - name: icons
     buildsystem: simple
