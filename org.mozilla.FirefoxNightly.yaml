@@ -37,6 +37,7 @@ finish-args:
   
   - --filesystem=xdg-download
   - --filesystem=/run/.heim_org.h5l.kcm-socket
+  - --filesystem=xdg-run/speech-dispatcher:ro
 
   - --persist=.mozilla
 
