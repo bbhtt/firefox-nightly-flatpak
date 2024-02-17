@@ -74,7 +74,7 @@ modules:
       - install -Dm644 org.mozilla.firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
+        url: https://hg.mozilla.org/mozilla-central/raw-file/37f95f3281e96129b40618a823b13847ca4d587b/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
         sha256: 8f75776220dcfc4dbd0fa2b1438f26994a5346ce5f229a75f40b9a3d63afad3a
 
   - name: launch-script
@@ -101,8 +101,8 @@ modules:
       - install -Dm644 org.mozilla.firefox.appdata.xml.in ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
-        sha256: 88d24b6ef8dd414aea392ccd6be5f2e5331ad4de7b77bf52c430af03955f6d81
+        url: https://hg.mozilla.org/mozilla-central/raw-file/37f95f3281e96129b40618a823b13847ca4d587b/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
+        sha256: db39e078014caa6f97be775a2e0d2cf1366a45ca1fd146b210bf1594a99b9970
 
   - name: icons
     buildsystem: simple
