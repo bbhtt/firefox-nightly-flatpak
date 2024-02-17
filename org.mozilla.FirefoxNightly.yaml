@@ -11,10 +11,6 @@ add-extensions:
     add-ld-path: .
     no-autodownload: true
     version: '23.08'
-  org.mozilla.FirefoxNightly.Locale:
-    directory: share/runtime/langpack
-    autodelete: true
-    locale-subset: true
   org.mozilla.FirefoxNightly.systemconfig:
     directory: etc/firefox
     no-autodownload: true
