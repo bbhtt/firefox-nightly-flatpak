@@ -54,12 +54,17 @@ modules:
   - name: search-provider
     buildsystem: simple
     build-commands:
-      - sed -i -e "s/firefox.desktop/${FLATPAK_ID}.desktop/g" -e "s/org\.mozilla\.Firefox\.SearchProvider/org\.mozilla\.firefox_nightly\.SearchProvider/g" -e "s|\/org\/mozilla\/Firefox\/SearchProvider|\/org\/mozilla\/firefox_nightly\/SearchProvider|g" firefox-search-provider.ini
-      - install -Dm644 firefox-search-provider.ini ${FLATPAK_DEST}/share/gnome-shell/search-providers/${FLATPAK_ID}-search-provider.ini
+      - sed -i -e "s/firefox.desktop/${FLATPAK_ID}.desktop/g" -e "s/org\.mozilla\.Firefox\.SearchProvider/org\.mozilla\.firefox_nightly\.SearchProvider/g" -e "s|\/org\/mozilla\/Firefox\/SearchProvider|\/org\/mozilla\/firefox_nightly\/SearchProvider|g" org.mozilla.firefox.search-provider.ini
+      - sed -i -e 's/Name=org\.mozilla.firefox\.SearchProvider/Name=org\.mozilla\.FirefoxNightly\.SearchProvider/g' -e 's/Exec=\/usr\/bin\/firefox/Exec=\/app\/bin\/firefox-nightly/g' org.mozilla.firefox.SearchProvider.service
+      - install -Dm644 org.mozilla.firefox.search-provider.ini ${FLATPAK_DEST}/share/gnome-shell/search-providers/${FLATPAK_ID}-search-provider.ini
+      - install -Dm644 org.mozilla.firefox.SearchProvider.service ${FLATPAK_DEST}/share/dbus-1/services/${FLATPAK_ID}.SearchProvider.service
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/33f0079fba2d08c293f0a63890fa88c78e2550ec/browser/components/shell/search-provider-files/firefox-search-provider.ini
-        sha256: bd1552045fe32411cf1d0368c69735a95816cf1ddb32ea1a0059fd2f6a694f71
+        url: https://hg.mozilla.org/mozilla-central/raw-file/861d200fe3e761e23bbb6ce556446725fb01cd43/browser/components/shell/search-provider-files/org.mozilla.firefox.search-provider.ini
+        sha256: b6104964478760c2f92d54978364c342746c1cdb4963dbc61d13bb68cccc81e9
+      - type: file
+        url: https://hg.mozilla.org/mozilla-central/raw-file/37f95f3281e96129b40618a823b13847ca4d587b/browser/components/shell/search-provider-files/org.mozilla.firefox.SearchProvider.service
+        sha256: 68e2ce9033fc17394ab9daed0d7478022ab88e210453af90c403fab023a79500
 
   - name: desktop-file
     buildsystem: simple
