@@ -29,6 +29,8 @@ finish-args:
   - --socket=pulseaudio
   - --socket=wayland
 
+  - --env=DICPATH=/usr/share/hunspell
+
   - --require-version=0.11.1
   
   - --filesystem=xdg-download
