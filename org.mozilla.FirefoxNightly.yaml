@@ -62,22 +62,20 @@ modules:
       - install -Dm644 org.mozilla.firefox.SearchProvider.service ${FLATPAK_DEST}/share/dbus-1/services/${FLATPAK_ID}.SearchProvider.service
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/861d200fe3e761e23bbb6ce556446725fb01cd43/browser/components/shell/search-provider-files/org.mozilla.firefox.search-provider.ini
-        sha256: b6104964478760c2f92d54978364c342746c1cdb4963dbc61d13bb68cccc81e9
+        path: files/org.mozilla.firefox.search-provider.ini
+        sha256: d7a60275693f344c3655a956d036d0ed8a375eab38df84cab3d4bc30527d056d
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/37f95f3281e96129b40618a823b13847ca4d587b/browser/components/shell/search-provider-files/org.mozilla.firefox.SearchProvider.service
-        sha256: 68e2ce9033fc17394ab9daed0d7478022ab88e210453af90c403fab023a79500
+        path: files/org.mozilla.firefox.SearchProvider.service
+        sha256: b5b15369fc818ba27473250ccd95b6095be983ea7cd08ed8ac1bcbfa5fce326a
 
   - name: desktop-file
     buildsystem: simple
     build-commands:
-      - sed -i -e "s/Exec=firefox/Exec=firefox-nightly/g" -e "s/Icon=org.mozilla.firefox/Icon=${FLATPAK_ID}/g"
-        -e "s/Name=Firefox Web Browser/Name=Firefox Nightly/g" -e "s/StartupWMClass=firefox/StartupWMClass=org.mozilla.FirefoxNightly/g" org.mozilla.firefox.desktop
       - install -Dm644 org.mozilla.firefox.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/37f95f3281e96129b40618a823b13847ca4d587b/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.desktop
-        sha256: 8f75776220dcfc4dbd0fa2b1438f26994a5346ce5f229a75f40b9a3d63afad3a
+        path: files/org.mozilla.firefox.desktop
+        sha256: 50697a731482b908c2b578cc13f017218d500f5b8135ea257aefc9c2fc3254eb
 
   - name: launch-script
     buildsystem: simple
@@ -97,14 +95,12 @@ modules:
       env:
         VERSION: 127.0a1
     build-commands:
-      - sed -i -e "s/Firefox/Firefox Nightly/g" org.mozilla.firefox.appdata.xml.in
-      - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" -e "s/org.mozilla.firefox/${FLATPAK_ID}/"
-        -e "s/org.mozilla.firefox.desktop/${FLATPAK_ID}.desktop/g" org.mozilla.firefox.appdata.xml.in
+      - sed -i -e "s/\$VERSION/${VERSION}/" -e "s/\$DATE/$(date '+%F')/" org.mozilla.firefox.appdata.xml.in
       - install -Dm644 org.mozilla.firefox.appdata.xml.in ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
     sources:
       - type: file
-        url: https://hg.mozilla.org/mozilla-central/raw-file/37f95f3281e96129b40618a823b13847ca4d587b/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in
-        sha256: db39e078014caa6f97be775a2e0d2cf1366a45ca1fd146b210bf1594a99b9970
+        path: files/org.mozilla.firefox.appdata.xml.in
+        sha256: 9d12c38d9bb43c0152c8acae28f3140742aa393a7a8b86fc5c7e1489ebf1dea0
 
   - name: icons
     buildsystem: simple
@@ -112,9 +108,12 @@ modules:
       - install -Dm644 "Fx-Browser-Nightly-icon-fullColor.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
       - install -Dm644 "Fx-Browser-Nightly-icon-oneColor-white.svg" "${FLATPAK_DEST}/share/icons/hicolor/symbolic/apps/${FLATPAK_ID}-symbolic.svg"
     sources:
-      - type: archive
-        url: https://mozilla.design/files/2019/10/Firefox-Browser-Nightly-Logo-Assets.zip
-        sha256: 171804ae3ded7446b7719f656c2124a9e425896f692cecddb8b86708a0105b11
+      - type: file
+        path: files/Fx-Browser-Nightly-icon-fullColor.svg
+        sha256: 801f317d754d278f598dafd9585e1d4d922e9923f723afa591ce74e3ffe78c04
+      - type: file
+        path: files/Fx-Browser-Nightly-icon-oneColor-white.svg
+        sha256: 7a3bd5b48384879198e2e9019adcfcabdd0bce1e296c27db11a67fdb5d3838d0
 
   - name: distribution
     buildsystem: simple
@@ -122,7 +121,7 @@ modules:
       - install -Dm644 distribution.ini ${FLATPAK_DEST}/lib/firefox/distribution/distribution.ini
     sources:
       - type: file
-        url: https://raw.githubusercontent.com/mozilla-partners/flatpak/669af66414d0f8114d4bfd4021801738d02f9cd2/desktop/flatpak/distribution/distribution.ini
+        path: files/distribution.ini
         sha256: 5734f9a472d682326c087e92b71c3970e95712f24b1e4d88722669efdb3430a8
 
   - name: firefox-nightly
