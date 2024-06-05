@@ -134,11 +134,11 @@ modules:
     sources:
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-128.0a1.en-US.linux-x86_64.tar.bz2
-        sha256: 105bde745b5c160756388b638d5053bf8224e3131df468dc12f55df21bab205c
+        sha256: ea1c817ace66668d9741ae03985a30a03e62e572a516625122deed7f41fe7115
         only-arches: [x86_64]
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-128.0a1.en-US.linux-aarch64.tar.bz2
-        sha256: cf0d32e20ef79b565a0becbc408c2090c0a3b6394a2efacb051db3c614e542a7
+        sha256: f05469e104901bafa8b916e04868c763cd21b6e8e68af97cce0bcd6c5c3ec9cf
         only-arches: [aarch64]
 #        x-checker-data:
 #          type: rotating-url
