@@ -1,5 +1,5 @@
 include:
-  - https://gitlab.com/projects261/gitlab-ci-templates/-/raw/main/flatpak.yml
+  - https://gitlab.com/projects261/gitlab-ci-templates/-/raw/main/flatpak-nightly.yml
   - https://gitlab.com/projects261/gitlab-ci-templates/-/raw/main/flatpak-updater.yml
 # - https://gitlab.com/projects261/gitlab-ci-templates/-/raw/main/mozilla-langpacks-update.yml
 
