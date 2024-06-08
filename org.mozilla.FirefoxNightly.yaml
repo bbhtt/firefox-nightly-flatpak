@@ -45,6 +45,7 @@ finish-args:
 
   - --system-talk-name=org.freedesktop.NetworkManager
 
+  - --own-name=org.mozilla.firefox.*
   - --own-name=org.mpris.MediaPlayer2.firefox.*
   - --own-name=org.mozilla.firefox_nightly.*
 
