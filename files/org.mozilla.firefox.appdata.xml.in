@@ -28,19 +28,16 @@
 
   <screenshots>
     <screenshot type="default">
-      <image type="source">https://raw.githubusercontent.com/mozilla-releng/scriptworker-scripts/master/pushflatpakscript/media/screenshots/image1.png</image>
-      <caption>The “New Tab” page</caption>
+      <image type="source">https://gitlab.com/projects261/firefox-nightly-flatpak/-/raw/main/files/screenshot01-first-run.png</image>
+      <caption>The “Thank You for using Firefox Nightly” page</caption>
     </screenshot>
     <screenshot>
-      <image type="source">https://raw.githubusercontent.com/mozilla-releng/scriptworker-scripts/master/pushflatpakscript/media/screenshots/image2.png</image>
-      <caption>A Wikipedia article displayed in Firefox Nightly</caption>
+      <image type="source">https://gitlab.com/projects261/firefox-nightly-flatpak/-/raw/main/files/screenshot02-newtab.png</image>
+      <caption>The New Tab page</caption>
     </screenshot>
     <screenshot>
-      <image type="source">https://raw.githubusercontent.com/mozilla-releng/scriptworker-scripts/master/pushflatpakscript/media/screenshots/image3.png</image>
-      <caption>The “Welcome to Firefox Nightly” page: “Open up an amazing internet”</caption>
+      <image type="source">https://gitlab.com/projects261/firefox-nightly-flatpak/-/raw/main/files/screenshot03-wikipedia.png</image>
+      <caption>A Wikipedia page</caption>
     </screenshot>
   </screenshots>
-  <custom>
-    <value key="flathub::manifest">https://hg.mozilla.org/mozilla-central/file/tip/taskcluster/docker/firefox-flatpak/runme.sh</value>
-  </custom>
 </component>
