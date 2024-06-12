@@ -2,12 +2,13 @@
 <component type="desktop-application">
   <id>org.mozilla.FirefoxNightly</id>
   <launchable type="desktop-id">org.mozilla.FirefoxNightly.desktop</launchable>
-  <name>Firefox Nightly</name>
+  <name>Firefox Nightly (Unofficial)</name>
   <developer_name>Mozilla</developer_name>
   <summary>Fast, Private &amp; Safe Web Browser</summary>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0</project_license>
   <description>
+    <p>NOTE: This is an unofficial repackaging of Mozilla binary packages and not supported by Mozilla</p>
     <p>When it comes to your life online, you have a choice: accept the factory settings or put your privacy first. When you choose Firefox Nightly as your default browser, you’re choosing to protect your data while supporting an independent tech company. Firefox Nightly is also the only major browser backed by a non-profit fighting to give you more openness, transparency and control of your life online. Join hundreds of millions of people who choose to protect what's important by choosing Firefox Nightly - a web browser designed to be fast, easy to use, customizable and private.</p>
   </description>
   <releases>
@@ -21,8 +22,8 @@
   <content_rating type="oars-1.1" />
   <url type="homepage">https://www.mozilla.org/firefox/</url>
   <url type="donation">https://donate.mozilla.org/</url>
-  <url type="bugtracker">https://bugzilla.mozilla.org/</url>
-  <url type="help">https://support.mozilla.org/</url>
+  <url type="bugtracker">https://gitlab.com/projects261/firefox-nightly-flatpak/-/issues</url>
+  <url type="help">https://gitlab.com/projects261/firefox-nightly-flatpak/-/issues</url>
   <url type="translate">https://wiki.mozilla.org/L10n:Starting_a_localization</url>
 
   <screenshots>

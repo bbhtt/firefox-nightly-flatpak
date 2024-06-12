@@ -74,7 +74,7 @@ modules:
     sources:
       - type: file
         path: files/org.mozilla.firefox.desktop
-        sha256: 50697a731482b908c2b578cc13f017218d500f5b8135ea257aefc9c2fc3254eb
+        sha256: 2d3c5e13a54475b7ffea190e1f3c60dc09e15d1f12fe3b274db1759b2d0b922b
 
   - name: launch-script
     buildsystem: simple
@@ -99,7 +99,7 @@ modules:
     sources:
       - type: file
         path: files/org.mozilla.firefox.appdata.xml.in
-        sha256: 9d12c38d9bb43c0152c8acae28f3140742aa393a7a8b86fc5c7e1489ebf1dea0
+        sha256: 3836e454f39a35ec598163867f42e8717d4100651383bfb38b1d312d36ebc876
 
   - name: icons
     buildsystem: simple
