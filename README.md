@@ -76,7 +76,7 @@ flatpak-builder build --force-clean --user --install-deps-from=flathub --install
 
 ## Signature
 
-GPG key fingerprint used to sign repo: F8A5F798CA257770
+GPG key used to sign repo: F8A5F798CA257770
 
 You can verify the key used, using
 
