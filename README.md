@@ -145,3 +145,5 @@ flatpak-builder build --force-clean --user --install org.mozilla.FirefoxNightly.
 6. (Optional) To build a bundle follow https://docs.flatpak.org/en/latest/single-file-bundles.html
 
 GPG key fingerprint used to sign repo: D53F C6E7 5E0A 45F5 386A  6588 F8A5 F798 CA25 7770
+
+You can verify the key used, using `cat /var/lib/flatpak/repo/firefoxnightly-origin.trustedkeys.gpg| gpg --dry-run --import-options show-only --import`
