@@ -139,7 +139,7 @@ modules:
         only-arches: [x86_64]
       - type: archive
         url: https://download-installer.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-134.0a1.en-US.linux-aarch64.tar.bz2
-        sha256: 5a33fa8378bc4476dc02224c9acfe746dd465c761fc9bdaa7559b914193d01db
+        sha256: f4c4511930964360269f35719bb689619381be66ef82229b008787b3f77c0c5c
         only-arches: [aarch64]
 #        x-checker-data:
 #          type: rotating-url
