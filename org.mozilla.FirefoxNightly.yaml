@@ -30,6 +30,7 @@ finish-args:
   - --socket=wayland
 
   - --env=DICPATH=/usr/share/hunspell
+  - --env=MOZ_APP_REMOTINGNAME=org.mozilla.FirefoxNightly
 
   - --require-version=0.11.1
   
