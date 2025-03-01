@@ -75,7 +75,7 @@ modules:
     sources:
       - type: file
         path: files/org.mozilla.firefox.desktop
-        sha256: 2d3c5e13a54475b7ffea190e1f3c60dc09e15d1f12fe3b274db1759b2d0b922b
+        sha256: ab1a541bfa89e57c4e0ecc3b606532547a7cba6854202ee80ba694bac4429ad5
 
   - name: launch-script
     buildsystem: simple
@@ -119,7 +119,7 @@ modules:
     sources:
       - type: file
         path: files/distribution.ini
-        sha256: 5734f9a472d682326c087e92b71c3970e95712f24b1e4d88722669efdb3430a8
+        sha256: 0a66c247f969621e2fded88f9fad30e608d9e8db14d1ef92f65d0544e6665c69
 
   - name: firefox-nightly
     buildsystem: simple
