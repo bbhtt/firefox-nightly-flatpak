@@ -1,0 +1,6 @@
+{
+    "org.mozilla.FirefoxNightly": [
+        "appstream-screenshots-not-mirrored-in-ostree",
+        "appstream-external-screenshot-url"
+    ]
+}
